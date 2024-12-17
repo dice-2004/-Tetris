@@ -3,9 +3,18 @@
 ##########################################################################################################################
 import tkinter as tk
 import modules.setting_enviroments as env
-from modules.setting_enviroments import value
+from modules.top_class import top_page
 
 env.init()
+top_root = tk.Tk()
+top_root.top_root("Start Menu")
+top_root.geometry("500x300")
+top = top_page(top_root)
+top_root.mainloop()
+# value -> 0:Game Start, 1:Billing, 2:Setting, 3:Exit
+value=top.get_select_value()
+print(value)
+
 ##########################################################################################################################
 #########################################ここは変えるな 変えたら死#########################################################
 ##########################################################################################################################
