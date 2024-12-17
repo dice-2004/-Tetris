@@ -1,16 +1,21 @@
 ##########################################################################################################################
 #########################################ここは変えるな 変えたら死#########################################################
 ##########################################################################################################################
-import os
 import tkinter as tk
+import ctypes
 
-# 現在のユーザー名を取得
-user_name = os.getlogin()
+import modules.setting_enviroments as env
+from modules.top_class import Top_page
 
-# 環境変数を設定
-os.environ["TCL_LIBRARY"] = (
-    rf"C:\Users\{user_name}\AppData\Local\Programs\Python\Python313\tcl\tcl8.6"
-)
+# 初期化処理
+env.init()
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
+
+# スタートメニュー
+top = Top_page("Start Menu",600,500,0,0)
+# value -> 0:課金, 1:Gama Start, 2:Setting, 3:Exit
+value=top.get_select_value()
+print(value)
 
 ##########################################################################################################################
 #########################################ここは変えるな 変えたら死#########################################################
@@ -23,3 +28,7 @@ root.title("Hello, Tkinter!")
 label = tk.Label(root, text="Hello, World!")
 label.pack()
 root.mainloop()
+
+# ゲーム画面
+while True:
+    pass
