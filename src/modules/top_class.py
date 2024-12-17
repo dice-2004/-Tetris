@@ -4,8 +4,10 @@ import tkinter as tk
 
 
 class top_page:
-    def __init__(self, root: tk.Tk) -> None:
-        self.root = root
+    def __init__(self, window_title: str,width:int,height:int,x_position:int,y_position:int) -> None:
+        self.root = tk.Tk()
+        self.root.title(window_title)
+        self.root.geometry(f"{width}x{height}+{x_position}+{y_position}")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
         # キーイベントのバインディング
         self.root.bind("<Up>", self.up)  # 上矢印キー
@@ -24,6 +26,7 @@ class top_page:
         self.labels = []
 
         self.draw_menue()
+        self.root.mainloop()
 
     # メニュー描写
     def draw_menue(self) -> None:
@@ -88,14 +91,11 @@ class top_page:
 
 if __name__ == "__main__":
     import setting_enviroments as env
+    import ctypes
     env.init()
-
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)
     # スタートメニュー
-    title = tk.Tk()
-    title.title("Start Menu")
-    title.geometry("500x300")
-    top = top_page(title)
-    title.mainloop()
+    top = top_page("Start Menu",600,500,0,0)
     value=top.get_select_value()
     print(value)
 

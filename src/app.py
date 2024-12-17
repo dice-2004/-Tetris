@@ -2,15 +2,17 @@
 #########################################ここは変えるな 変えたら死#########################################################
 ##########################################################################################################################
 import tkinter as tk
+import ctypes
+
 import modules.setting_enviroments as env
 from modules.top_class import top_page
 
+# 初期化処理
 env.init()
-top_root = tk.Tk()
-top_root.top_root("Start Menu")
-top_root.geometry("500x300")
-top = top_page(top_root)
-top_root.mainloop()
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
+
+# スタートメニュー
+top = top_page("Start Menu",600,500,0,0)
 # value -> 0:Game Start, 1:Billing, 2:Setting, 3:Exit
 value=top.get_select_value()
 print(value)
@@ -26,10 +28,6 @@ root.title("Hello, Tkinter!")
 label = tk.Label(root, text="Hello, World!")
 label.pack()
 root.mainloop()
-
-# スタートメニュー
-while True:
-    pass
 
 # ゲーム画面
 while True:
