@@ -13,7 +13,7 @@ ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
 # スタートメニュー
 top = top_page("Start Menu",600,500,0,0)
-# value -> 0:Game Start, 1:Billing, 2:Setting, 3:Exit
+# value -> 0:課金, 1:Gama Start, 2:Setting, 3:Exit
 value=top.get_select_value()
 print(value)
 
