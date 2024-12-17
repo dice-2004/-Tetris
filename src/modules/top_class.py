@@ -3,7 +3,7 @@ import tkinter as tk
 # import time
 
 
-class top_page:
+class Top_page:
     def __init__(self, window_title: str,width:int,height:int,x_position:int,y_position:int) -> None:
         self.root = tk.Tk()
         self.root.title(window_title)
@@ -173,7 +173,7 @@ if __name__ == "__main__":
     env.init()
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
     # スタートメニュー
-    top = top_page("Start Menu",600,500,0,0)
+    top = Top_page("Start Menu",600,500,0,0)
     value=top.get_select_value()
     print(value)
 

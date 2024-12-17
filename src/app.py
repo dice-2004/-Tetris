@@ -5,14 +5,14 @@ import tkinter as tk
 import ctypes
 
 import modules.setting_enviroments as env
-from modules.top_class import top_page
+from modules.top_class import Top_page
 
 # 初期化処理
 env.init()
 ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
 # スタートメニュー
-top = top_page("Start Menu",600,500,0,0)
+top = Top_page("Start Menu",600,500,0,0)
 # value -> 0:課金, 1:Gama Start, 2:Setting, 3:Exit
 value=top.get_select_value()
 print(value)
