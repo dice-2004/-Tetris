@@ -8,3 +8,4 @@ def init() -> None:
     os.environ["TCL_LIBRARY"] = (
         rf"C:\Users\{user_name}\AppData\Local\Programs\Python\Python313\tcl\tcl8.6"
     )
+    return 2

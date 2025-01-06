@@ -5,27 +5,29 @@ import tkinter as tk
 
 class Top_page:
     def __init__(self, window_title: str,width:int,height:int,x_position:int,y_position:int) -> None:
-        self.root = tk.Tk()
+        self.root:tk.Tk = tk.Tk()
+
         self.root.title(window_title)
         self.root.geometry(f"{width}x{height}+{x_position}+{y_position}")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
+        self.root.focus_force()
         # キーイベントのバインディング
         self.root.bind("<Up>", self.up)  # 上矢印キー
         self.root.bind("<Down>", self.down)  # 下矢印キー
         self.root.bind("<Return>", self.enter)  # Enterキー
 
-        self.SECELT = "#FF0000"  # red
-        self.NOT_SECELT = "#0000FF"  # blue
-        self.menu = [
+        self.SECELT:str = "#FF0000"  # red
+        self.NOT_SECELT:str = "#0000FF"  # blue
+        self.menu:dict = [
             {"text": "課金", "color": self.NOT_SECELT},
             {"text": "Start Game", "color": self.SECELT},
             {"text": "Setting", "color": self.NOT_SECELT},
             {"text": "Exit", "color": self.NOT_SECELT},
         ]
-        self.select_value = 1
-        self.labels = []
+        self.select_value:int = 1
+        self.labels:any = []
         # self.Canvases = []
-        self.canvas = tk.Canvas(self.root, bg="white", highlightthickness=0)  # Canvasの作成
+        self.canvas:tk.Canvas = tk.Canvas(self.root, bg="white", highlightthickness=0)  # Canvasの作成
         self.canvas.pack(fill="both", expand=True)
         self.draw_menu()
         self.root.mainloop()
@@ -48,18 +50,18 @@ class Top_page:
                 self.labels.append(self.label)
             else:
                 # 2つ目以降のラベルの位置とサイズ
-                x = -50 + 100 * i
-                y = 130 + 80 * i
-                width = 250
-                height = 60
-                font_size = 20
-                radius = 25
+                x:int = -50 + 100 * i
+                y:int = 130 + 80 * i
+                width:int = 250
+                height:int = 60
+                font_size:int = 20
+                radius:int = 25
                             # 角丸の長方形を描画
                 self.create_rounded_rectangle(x, y, x+width, y+height, radius=radius, fill=self.menu[i]["color"])
 
                 # テキストを配置
-                text_x = x + width // 2
-                text_y = y + height // 2
+                text_x :int= x + width // 2
+                text_y :int= y + height // 2
                 self.canvas.create_text(
                     text_x,
                     text_y,
@@ -101,7 +103,7 @@ class Top_page:
     def up(self, event: tk.Event) -> None:
         print("↑")
         if self.select_value > 0:
-            self.select_value -= 1
+            int;self.select_value -= 1
         self.change_color()
         self.reset()
         self.draw_menu()
@@ -128,7 +130,7 @@ class Top_page:
     # 終了
     def exit(self) -> None:
         print("終了します")
-        self.select_value = 3
+        self.select_value:int = 3
         self.root.destroy()
 
     # リセット
@@ -153,7 +155,7 @@ class Top_page:
 
     def create_rounded_rectangle(self, x1, y1, x2, y2, radius=25, **kwargs):
         """角丸の長方形を描画する関数"""
-        points = [
+        points:any = [
             x1+radius, y1, x1+radius, y1,
             x2-radius, y1, x2-radius, y1,
             x2, y1, x2, y1+radius,
@@ -164,11 +166,12 @@ class Top_page:
             x1, y1+radius, x1, y1+radius,
             x1, y1
         ]
+
         return self.canvas.create_polygon(points, **kwargs, smooth=True)
 
 
 if __name__ == "__main__":
-    import setting_enviroments as env
+    from ..utils import setting_enviroments as env
     import ctypes
     env.init()
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
