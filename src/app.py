@@ -4,6 +4,7 @@
 import tkinter as tk
 import ctypes
 import tkinter.messagebox as messagebox
+from typing import List, Any,Dict
 
 import utils.setting_enviroments as env
 from entities.top import Top_page
@@ -27,10 +28,15 @@ while value == 2:
 # ￥100,000,000,00
 #              ￥0
     if value == 0:
-        messagebox.showwarning("絶望", "￥100,000,000,00\n支払いが完了しました")
+        while True:
+            if messagebox.askyesno("はよしろ", "￥0\n残高がありません\n追加しますか？"):
+                messagebox.showinfo("感謝", "￥100,000,000,00\n追加しました")
+                messagebox.showwarning("絶望", "￥100,000,000,00\n支払いが完了しました")
+                break
+            else:
+                pass
         # entities/Tetromino/kakin.py
         # entities/game.py
-        pass
     elif value == 1:
         # entities/Tetromino/defalut.py
         # entities/game.py

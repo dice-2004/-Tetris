@@ -1,12 +1,12 @@
 import tkinter as tk
-
+from typing import Dict,List,Any
+from typing import Union
 # import time
-
+Num=Union[int,float]
 
 class Top_page:
     def __init__(self, window_title: str,width:int,height:int,x_position:int,y_position:int) -> None:
         self.root:tk.Tk = tk.Tk()
-
         self.root.title(window_title)
         self.root.geometry(f"{width}x{height}+{x_position}+{y_position}")
         self.root.protocol("WM_DELETE_WINDOW", self.exit)
@@ -18,14 +18,14 @@ class Top_page:
 
         self.SECELT:str = "#FF0000"  # red
         self.NOT_SECELT:str = "#0000FF"  # blue
-        self.menu:dict = [
+        self.menu:List[Dict[str,str]] = [
             {"text": "課金", "color": self.NOT_SECELT},
             {"text": "Start Game", "color": self.SECELT},
             {"text": "Setting", "color": self.NOT_SECELT},
             {"text": "Exit", "color": self.NOT_SECELT},
         ]
         self.select_value:int = 1
-        self.labels:any = []
+        self.labels:Any = []
         # self.Canvases = []
         self.canvas:tk.Canvas = tk.Canvas(self.root, bg="white", highlightthickness=0)  # Canvasの作成
         self.canvas.pack(fill="both", expand=True)
@@ -37,7 +37,7 @@ class Top_page:
         for i in range(len(self.menu)):
             x, y = 500, 0  # 初期座標
             if i == 0:
-                self.label = tk.Label(
+                self.label:tk.Label = tk.Label(
                     self.root,
                     text=self.menu[i]["text"],
                     bg=self.menu[i]["color"],
@@ -60,8 +60,8 @@ class Top_page:
                 self.create_rounded_rectangle(x, y, x+width, y+height, radius=radius, fill=self.menu[i]["color"])
 
                 # テキストを配置
-                text_x :int= x + width // 2
-                text_y :int= y + height // 2
+                text_x :Num= x + width // 2
+                text_y :Num= y + height // 2
                 self.canvas.create_text(
                     text_x,
                     text_y,
@@ -155,7 +155,7 @@ class Top_page:
 
     def create_rounded_rectangle(self, x1, y1, x2, y2, radius=25, **kwargs):
         """角丸の長方形を描画する関数"""
-        points:any = [
+        points:Num= [
             x1+radius, y1, x1+radius, y1,
             x2-radius, y1, x2-radius, y1,
             x2, y1, x2, y1+radius,
