@@ -4,8 +4,8 @@
 import tkinter as tk
 import ctypes
 
-import modules.setting_enviroments as env
-from modules.top_class import Top_page
+import utils.setting_enviroments as env
+from entities.top import Top_page
 
 # 初期化処理
 env.init()
