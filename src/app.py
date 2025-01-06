@@ -3,6 +3,7 @@
 ##########################################################################################################################
 import tkinter as tk
 import ctypes
+import tkinter.messagebox as messagebox
 
 import utils.setting_enviroments as env
 from entities.top import Top_page
@@ -23,9 +24,10 @@ while value == 2:
 ##########################################################################################################################
 #########################################ここは変えるな 変えたら殺#########################################################
 ##########################################################################################################################
-
-
+# ￥100,000,000,00
+#              ￥0
     if value == 0:
+        messagebox.showwarning("絶望", "￥100,000,000,00\n支払いが完了しました")
         # entities/Tetromino/kakin.py
         # entities/game.py
         pass
@@ -43,7 +45,7 @@ while value == 2:
 
 
 # Tkinterを使用してウィンドウを作成
-root:tk.TK = tk.Tk()
+root:tk.Tk = tk.Tk()
 root.title("Hello, Tkinter!")
 label:tk.Label = tk.Label(root, text="Hello, World!")
 label.pack()
