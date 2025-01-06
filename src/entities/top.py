@@ -1,6 +1,6 @@
 import tkinter as tk
 from typing import Dict,List,Any
-from typing import Union
+from typing import Union,Literal
 # import time
 Num=Union[int,float]
 
@@ -18,7 +18,7 @@ class Top_page:
 
         self.SECELT:str = "#FF0000"  # red
         self.NOT_SECELT:str = "#0000FF"  # blue
-        self.menu:List[Dict[str,str]] = [
+        self.menu:List[Dict[str,Literal["#FF0000", "#0000FF"]]] = [
             {"text": "課金", "color": self.NOT_SECELT},
             {"text": "Start Game", "color": self.SECELT},
             {"text": "Setting", "color": self.NOT_SECELT},
@@ -111,7 +111,6 @@ class Top_page:
     # 下キー
     def down(self, event: tk.Event) -> None:
         print("↓")
-        # 選択値を下に移動する処理を追加することができます
         if self.select_value < 3:
             self.select_value += 1
         self.change_color()
@@ -122,7 +121,6 @@ class Top_page:
     def enter(self, event: tk.Event) -> None:
         """Enterキーが押されたときの処理"""
         print("Enterキーが押されました")
-        # 選択されたメニューの処理を追加することができます
         self.reset()
         self.root.destroy()
         return self.select_value
