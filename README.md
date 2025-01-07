@@ -1,7 +1,7 @@
 # English
 ### 情報英語で使用するリポジトリ
 
-実行
+execute
 ```
 python src/app.py
 ```
