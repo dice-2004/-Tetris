@@ -2,16 +2,18 @@ import tkinter as tk
 from .dataclass import default, kakin,field
 import random
 from pprint import pprint
+from time import sleep
 
 class Game:
     def __init__(self,mode:int) -> None:
-        if mode == 0:
+        self.mode:int = mode
+        if self.mode == 0:
             self.tetromino = kakin.Kakin().Tetromino
-        elif mode == 1:
+        elif self.mode == 1:
             self.tetromino = default.Defalut().Tetromino
         self.root = tk.Tk()
         self.MAP:field.Field = field.Field()
-        
+
         with open("src/entities/dataclass/map.txt","w") as f:
             for row in self.MAP.map:
                 f.write(" ".join(map(str, row)) + "\n")
@@ -19,10 +21,24 @@ class Game:
         # データクラスの書き換え
 
     def fall(self) -> None:
+        border_y:int = 0
+        border_x:int = 0
         string:str=random.choice(list(self.tetromino.keys()))
-        for block in self.tetromino[string]:
-            print(block)
-        #     self.MAP.down(block)
+        # while True:
+        #     self.MAP.down(self.tetromino[string],border_y)
+        #     border_y+=1
+        #     with open("src/entities/dataclass/map.txt","w") as f:
+        #         for row in self.MAP.map:
+        #             f.write(" ".join(map(str, row)) + "\n")
+        #     sleep(1)
+        while True:
+            self.MAP.move(self.tetromino[string],border_x)
+            border_x+=1
+            with open("src/entities/dataclass/map.txt","w") as f:
+                for row in self.MAP.map:
+                    f.write(" ".join(map(str, row)) + "\n")
+            sleep(1)
+
         # print(self.MAP.map)
 
 

@@ -44,9 +44,8 @@ while value == 2:
         GAME:game.Game=game.Game(value)
         # entities/Tetromino/defalut.py
         # entities/game.py
-        # while True:
-        #     GAME.fall()
-        #     sleep(1)
+
+        GAME.fall()
         pass
     elif value == 2:
         # entities/setting.py

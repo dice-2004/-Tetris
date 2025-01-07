@@ -1,7 +1,7 @@
 import dataclasses
 from typing import List, Dict
 
-BASE: Dict[str, int] = {"x": 5, "y": 20}
+BASE: Dict[str, int] = {"x": 5, "y": 0}
 
 
 # 幅10、高さ20、左下原点の座標系上に描写
@@ -9,13 +9,48 @@ BASE: Dict[str, int] = {"x": 5, "y": 20}
 class Defalut:
     Tetromino: Dict[str, List[List[int]]] = dataclasses.field(default_factory=lambda: {
 #ex)    "D": [[x, y], [x, y], [x, y], [x, y]],
-        "I": [BASE["x"] - 1, BASE["y"], BASE["x"], BASE["y"], BASE["x"] + 1, BASE["y"], BASE["x"] + 2, BASE["y"]],
-        "O": [[BASE["x"], BASE["y"]], [BASE["x"] + 1, BASE["y"]], [BASE["x"], BASE["y"] + 1], [BASE["x"] + 1, BASE["y"] + 1]],
-        "S": [[BASE["x"], BASE["y"]], [BASE["x"] + 1, BASE["y"]], [BASE["x"] + 1, BASE["y"] + 1], [BASE["x"] + 2, BASE["y"] + 1]],
-        "Z": [[BASE["x"] + 1, BASE["y"]], [BASE["x"] + 2, BASE["y"]], [BASE["x"], BASE["y"] + 1], [BASE["x"] + 1, BASE["y"] + 1]],
-        "J": [[BASE["x"]+1, BASE["y"]], [BASE["x"]+1, BASE["y"]+1], [BASE["x"]+1, BASE["y"]+2], [BASE["x"], BASE["y"]+2]],
-        "L": [[BASE["x"], BASE["y"]], [BASE["x"], BASE["y"]+1], [BASE["x"], BASE["y"]+2], [BASE["x"]+1, BASE["y"]+2]],
-        "T": [[BASE["x"]-1, BASE["y"]], [BASE["x"], BASE["y"]], [BASE["x"]+1, BASE["y"]], [BASE["x"], BASE["y"]+1]]
+        "I": [
+            [BASE["x"] - 1, BASE["y"]],
+            [BASE["x"], BASE["y"]],
+            [BASE["x"] + 1, BASE["y"]],
+            [BASE["x"] + 2, BASE["y"]]
+            ],
+        "O": [
+            [BASE["x"], BASE["y"]],
+            [BASE["x"] + 1, BASE["y"]],
+            [BASE["x"], BASE["y"] -1],
+            [BASE["x"] + 1, BASE["y"] -1]
+            ],
+        "S": [
+            [BASE["x"], BASE["y"]],
+            [BASE["x"] + 1, BASE["y"]],
+            [BASE["x"] + 1, BASE["y"] + 1],
+            [BASE["x"] + 2, BASE["y"] + 1]
+            ],
+        "Z": [
+            [BASE["x"] + 1, BASE["y"]],
+            [BASE["x"] + 2, BASE["y"]],
+            [BASE["x"], BASE["y"] + 1],
+            [BASE["x"] + 1, BASE["y"] + 1]
+            ],
+        "J": [
+            [BASE["x"]+1, BASE["y"]],
+            [BASE["x"]+1, BASE["y"]+1],
+            [BASE["x"]+1, BASE["y"]+2],
+            [BASE["x"], BASE["y"]+2]
+            ],
+        "L": [
+            [BASE["x"], BASE["y"]],
+            [BASE["x"], BASE["y"]+1],
+            [BASE["x"], BASE["y"]+2],
+            [BASE["x"]+1, BASE["y"]+2]
+            ],
+        "T": [
+            [BASE["x"]-1, BASE["y"]],
+            [BASE["x"], BASE["y"]],
+            [BASE["x"]+1, BASE["y"]],
+            [BASE["x"], BASE["y"]+1]
+            ]
     })
 
 # 20
