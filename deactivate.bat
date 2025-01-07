@@ -1,2 +1,2 @@
-@REM @echo off
+@echo off
 .venv/Scripts/deactivate.bat

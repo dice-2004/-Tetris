@@ -5,9 +5,11 @@ import tkinter as tk
 import ctypes
 import tkinter.messagebox as messagebox
 from typing import List, Any,Dict
+from time import sleep
 
-import utils.setting_enviroments as env
+from utils import setting_enviroments as env
 from entities.top import Top_page
+from entities import game
 
 # 初期化処理
 value:int = env.init()
@@ -25,21 +27,26 @@ while value == 2:
 ##########################################################################################################################
 #########################################ここは変えるな 変えたら殺#########################################################
 ##########################################################################################################################
-# ￥100,000,000,00
+# ￥10,000,000,000
 #              ￥0
     if value == 0:
         while True:
-            if messagebox.askyesno("はよしろ", "￥0\n残高がありません\n追加しますか？"):
-                messagebox.showinfo("感謝", "￥100,000,000,00\n追加しました")
-                messagebox.showwarning("絶望", "￥100,000,000,00\n支払いが完了しました")
+            if messagebox.askyesno("警告", "￥0\n残高がありません\n追加しますか？"):
+                messagebox.showinfo("警告", "￥10,000,000,000\n追加しました")
+                messagebox.showwarning("警告", "￥10,000,000,000\n支払いが完了しました")
                 break
             else:
                 pass
+        GAME:game.Game=game.Game(value)
         # entities/Tetromino/kakin.py
         # entities/game.py
     elif value == 1:
+        GAME:game.Game=game.Game(value)
         # entities/Tetromino/defalut.py
         # entities/game.py
+        # while True:
+        #     GAME.fall()
+        #     sleep(1)
         pass
     elif value == 2:
         # entities/setting.py
@@ -53,6 +60,7 @@ while value == 2:
 # Tkinterを使用してウィンドウを作成
 root:tk.Tk = tk.Tk()
 root.title("Hello, Tkinter!")
+root.focus_force()
 label:tk.Label = tk.Label(root, text="Hello, World!")
 label.pack()
 root.mainloop()
