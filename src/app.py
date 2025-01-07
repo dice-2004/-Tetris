@@ -59,11 +59,11 @@ for y in range(22):
     field.append(sub)
 
 #テトロミノを表示する関数
-def drawTetris():
+def drawTetris(size):
     for i in range(4):
-        x = (tetro[type][i*2]+moveX)*SIZE
-        y = (tetro[type][i*2+1]+moveY)*SIZE
-        can. create_rectangle(x, y, x+SIZE, y+SIZE, fill=color[type])
+        x = (tetro[type][i*2]+moveX)*size
+        y = (tetro[type][i*2+1]+moveY)*size
+        can. create_rectangle(x, y, x+size, y+size, fill=color[type])
 
 #フィールドを表示する関数
 def drawField():
@@ -139,9 +139,16 @@ def deleteLine():
             messagebox.showinfo("information", "GAME OVER !")
             exit()
 
+def show_next():
+    win = tk.Tk()
+    next_can = tk.Canvas(win, width=4*SIZE, height=10*SIZE)
+    next_can.place(x=10, y=0)
+
 ####################  ゲームループ  ####################
+width = 500
+height = 640
 win = tk.Tk()
-win.geometry("340x630")
+win.geometry(f"{width}x{height}")
 win.title("Rough TETRIS")
 can = tk.Canvas(win, width=12*SIZE, height=21*SIZE)
 can.place(x=-10, y=0)
@@ -155,7 +162,7 @@ def gameLoop():
     can.delete("all")
     var.set(score)
     drawField()
-    drawTetris()
+    drawTetris(SIZE)
     can.after(50, gameLoop)
 
 gameLoop()
