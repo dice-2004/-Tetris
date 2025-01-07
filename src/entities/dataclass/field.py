@@ -15,8 +15,17 @@ class Field:
         for block in possition:
             self.map[block[y]+1+border_y][block[x]] = 1
 
-    def move(self,possition:List[List[int]],direction:int) -> None:
+    def right(self,possition:List[List[int]],border_x:int) -> None:
         for block in possition:
-            self.map[block[y]][block[x]+direction] = 0
+            self.map[block[y]][block[x]+border_x] = 0
+        border_x+=1
         for block in possition:
-            self.map[block[y]][block[x]+direction] = 1
+            self.map[block[y]][block[x]+border_x] = 1
+
+    def left(self,possition:List[List[int]],border_x:int) -> int:
+        for block in possition:
+            self.map[block[y]][block[x]+border_x] = 0
+        border_x-=1
+        for block in possition:
+            self.map[block[y]][block[x]+border_x] = 1
+        return border_x

@@ -32,8 +32,8 @@ class Game:
         #             f.write(" ".join(map(str, row)) + "\n")
         #     sleep(1)
         while True:
-            self.MAP.move(self.tetromino[string],border_x)
-            border_x+=1
+            border_x=self.MAP.left(self.tetromino[string],border_x)
+
             with open("src/entities/dataclass/map.txt","w") as f:
                 for row in self.MAP.map:
                     f.write(" ".join(map(str, row)) + "\n")
