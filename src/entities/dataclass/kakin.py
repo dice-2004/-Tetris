@@ -14,8 +14,14 @@ class Kakin:
                 [self.SHAFT["x"] - 1, self.SHAFT["y"]],
                 [self.SHAFT["x"], self.SHAFT["y"]],
                 [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] + 2, self.SHAFT["y"]]
-                ],
+                [self.SHAFT["x"] + 2, self.SHAFT["y"]],
+            ],
+            "O": [
+                [self.SHAFT["x"], self.SHAFT["y"]],
+                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
+                [self.SHAFT["x"], self.SHAFT["y"] + 1],
+                [self.SHAFT["x"] + 1, self.SHAFT["y"] + 1],
+            ],
         }
 
 #  0,1,2,3,4,5,6,7,8,9

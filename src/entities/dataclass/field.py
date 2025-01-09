@@ -18,6 +18,7 @@ class Field:
             [10 if (x == self.rows - 1 or y in {0, self.cols - 1}) else 0 for y in range(self.cols)]
             for x in range(self.rows)
         ]
+        self.score:int = 0
 
     def fall_all(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         for block in possition:
@@ -136,6 +137,10 @@ class Field:
             if all(self.map[i]):
                 self.map.pop(i)
                 self.map.insert(0,[10]+[0 for _ in range(self.cols-2)]+[10])
+                self.score+=1
+                print(self.score)
 
-    def spin(self) -> None:
-        pass
+    # def spin(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
+    #     if string == "O" or string == "I":
+    #         return
+    #     else:
