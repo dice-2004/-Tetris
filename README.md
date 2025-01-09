@@ -11,12 +11,15 @@ python src/app.py
 src
 │  app.py
 │
-├─assets
+├─assets📂
+|      # 画像データ等
 │      README.md
 │
-├─entities
+├─entities📂
+|      # クラス、データクラス
 │      README.md
 │
-└─utils
+└─utils📂
+       # 補助関数
        README.md
 ```
