@@ -1,57 +1,56 @@
 import dataclasses
-from typing import List, Dict
-
-BASE: Dict[str, int] = {"x": 5, "y": 0}
-
+from typing import List, Dict,Literal
 
 # 幅10、高さ20、左下原点の座標系上に描写
 @dataclasses.dataclass
 class Defalut:
-    Tetromino: Dict[str, List[List[int]]] = dataclasses.field(default_factory=lambda: {
-#ex)    "D": [[x, y], [x, y], [x, y], [x, y]],
-        "I": [
-            [BASE["x"] - 1, BASE["y"]],
-            [BASE["x"], BASE["y"]],
-            [BASE["x"] + 1, BASE["y"]],
-            [BASE["x"] + 2, BASE["y"]]
-            ],
-        "O": [
-            [BASE["x"], BASE["y"]],
-            [BASE["x"] + 1, BASE["y"]],
-            [BASE["x"], BASE["y"] -1],
-            [BASE["x"] + 1, BASE["y"] -1]
-            ],
-        "S": [
-            [BASE["x"], BASE["y"]],
-            [BASE["x"] + 1, BASE["y"]],
-            [BASE["x"] + 1, BASE["y"] + 1],
-            [BASE["x"] + 2, BASE["y"] + 1]
-            ],
-        "Z": [
-            [BASE["x"] + 1, BASE["y"]],
-            [BASE["x"] + 2, BASE["y"]],
-            [BASE["x"], BASE["y"] + 1],
-            [BASE["x"] + 1, BASE["y"] + 1]
-            ],
-        "J": [
-            [BASE["x"]+1, BASE["y"]],
-            [BASE["x"]+1, BASE["y"]+1],
-            [BASE["x"]+1, BASE["y"]+2],
-            [BASE["x"], BASE["y"]+2]
-            ],
-        "L": [
-            [BASE["x"], BASE["y"]],
-            [BASE["x"], BASE["y"]+1],
-            [BASE["x"], BASE["y"]+2],
-            [BASE["x"]+1, BASE["y"]+2]
-            ],
-        "T": [
-            [BASE["x"]-1, BASE["y"]],
-            [BASE["x"], BASE["y"]],
-            [BASE["x"]+1, BASE["y"]],
-            [BASE["x"], BASE["y"]+1]
-            ]
-    })
+    SHAFT:Dict[Literal["x","y"],int]
+    def __post_init__(self):
+        self.Tetromino: Dict[str, List[List[int]]] ={
+    #ex)    "D": [[x, y], [x, y], [x, y], [x, y]],
+            "I": [
+                [self.SHAFT["x"] - 1, self.SHAFT["y"]],
+                [self.SHAFT["x"], self.SHAFT["y"]],
+                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
+                [self.SHAFT["x"] + 2, self.SHAFT["y"]]
+                ],
+            "O": [
+                [self.SHAFT["x"], self.SHAFT["y"]],
+                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
+                [self.SHAFT["x"], self.SHAFT["y"] +1],
+                [self.SHAFT["x"] + 1, self.SHAFT["y"] +1]
+                ],
+            "S": [
+                [self.SHAFT["x"], self.SHAFT["y"]],
+                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
+                [self.SHAFT["x"] + 1, self.SHAFT["y"] + 1],
+                [self.SHAFT["x"] + 2, self.SHAFT["y"] + 1]
+                ],
+            "Z": [
+                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
+                [self.SHAFT["x"] + 2, self.SHAFT["y"]],
+                [self.SHAFT["x"], self.SHAFT["y"] + 1],
+                [self.SHAFT["x"] + 1, self.SHAFT["y"] + 1]
+                ],
+            "J": [
+                [self.SHAFT["x"]+1, self.SHAFT["y"]],
+                [self.SHAFT["x"]+1, self.SHAFT["y"]+1],
+                [self.SHAFT["x"]+1, self.SHAFT["y"]+2],
+                [self.SHAFT["x"], self.SHAFT["y"]+2]
+                ],
+            "L": [
+                [self.SHAFT["x"], self.SHAFT["y"]],
+                [self.SHAFT["x"], self.SHAFT["y"]+1],
+                [self.SHAFT["x"], self.SHAFT["y"]+2],
+                [self.SHAFT["x"]+1, self.SHAFT["y"]+2]
+                ],
+            "T": [
+                [self.SHAFT["x"]-1, self.SHAFT["y"]],
+                [self.SHAFT["x"], self.SHAFT["y"]],
+                [self.SHAFT["x"]+1, self.SHAFT["y"]],
+                [self.SHAFT["x"], self.SHAFT["y"]+1]
+                ]
+        }
 
 # 20
 # 19

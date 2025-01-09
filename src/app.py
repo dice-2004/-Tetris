@@ -14,6 +14,7 @@ from entities import game
 # 初期化処理
 value:int = env.init()
 ctypes.windll.shcore.SetProcessDpiAwareness(1)
+fall_interval:int = 500 # (ms)
 
 # スタートメニュー
 while value == 2:
@@ -37,11 +38,11 @@ while value == 2:
                 break
             else:
                 pass
-        GAME:game.Game=game.Game(value)
+        GAME:game.Game=game.Game(value,fall_interval)
         # entities/Tetromino/kakin.py
         # entities/game.py
     elif value == 1:
-        GAME:game.Game=game.Game(value)
+        GAME:game.Game=game.Game(value,fall_interval)
         # entities/Tetromino/defalut.py
         # entities/game.py
 
