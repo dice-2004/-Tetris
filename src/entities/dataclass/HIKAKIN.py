@@ -4,7 +4,7 @@ from typing import List, Dict, Literal
 
 # 幅10、高さ20、左下原点の座標系上に描写
 @dataclasses.dataclass
-class Defalut:
+class hikakin:
     SHAFT: Dict[Literal["x", "y"], int]
 
     def __post_init__(self):

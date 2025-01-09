@@ -140,7 +140,19 @@ class Field:
                 self.score+=1
                 print(self.score)
 
-    # def spin(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
-    #     if string == "O" or string == "I":
-    #         return
-    #     else:
+    def spin(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
+        if string == "O":
+            return
+        elif string == "I":
+            self.I_spin(possition,string)
+        else:
+            # self.def_spin(possition,string)
+            pass
+
+    def I_spin(self,possition:List[List[int]],string:Literal["I","O"]) -> None:
+        return
+    
+    def set_tetro(self,possition:List[List[int]]) -> None:
+        for block in possition:
+            self.map[block[y]][block[x]] = 0
+            block[x]-=1

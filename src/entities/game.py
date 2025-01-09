@@ -1,5 +1,5 @@
 import tkinter as tk
-from .dataclass import default, kakin,field
+from .dataclass import HIKAKIN, KAKIN,FIELD
 import random
 from time import time
 from pprint import pprint
@@ -12,10 +12,10 @@ class Game:
     def __init__(self,mode:int,time:int = 1000,rows:int = 23,cols:int =12) -> None:
         self.time = time
         if mode == 0:
-            self.mode = kakin.Kakin({"x":int(cols/2),"y":0})
+            self.mode = KAKIN.Kakin({"x":int(cols/2),"y":0})
         elif mode == 1:
-            self.mode = default.Defalut({"x":int(cols/2),"y":0})
-        self.MAP:field.Field = field.Field(rows,cols)
+            self.mode = HIKAKIN.hikakin({"x":int(cols/2),"y":0})
+        self.MAP:FIELD.Field = FIELD.Field(rows,cols)
         pprint(self.MAP.map)
 
         with open("src/entities/dataclass/map.txt","w") as f:
@@ -37,6 +37,7 @@ class Game:
         self.root.bind("<Right>", self.right)
         self.root.bind("<Left>", self.left)
         self.root.bind("<Up>", self.fall_all)
+        self.root.bind("<space>", self.spin)
         self.fall()
         self.root.mainloop()
         # データクラスの書き換え
@@ -96,7 +97,7 @@ class Game:
         self.is_falled=self.MAP.down(self.tetromino,self.string)
         self.root.after(self.time,self.fall)
 
-        # print(self.MAP.map
+        # print(self.MAP.map)
 
     @update
     def fall_all(self,event) -> None:
@@ -110,6 +111,10 @@ class Game:
         self.tetromino =copy.deepcopy(self.mode.Tetromino[self.string])
         self.is_falled=False
 
+    @update
+    def spin(self,event) -> None:
+        self.MAP.spin(self.tetromino,self.string)
+        print("space")
 if __name__=="__main__":
     # import ctypes
     # import utils.setting_enviroments as env
