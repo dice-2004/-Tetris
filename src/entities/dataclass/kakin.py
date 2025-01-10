@@ -17,7 +17,9 @@ class Kakin:
                     [self.BASE["x"], self.BASE["y"]],
                     [self.BASE["x"] + 1, self.BASE["y"]],
                     [self.BASE["x"] + 2, self.BASE["y"]],
+
                 ],
+                "spin_C":0,
             },
             "O": {
                 "shaft": [self.BASE["x"], self.BASE["y"]],
