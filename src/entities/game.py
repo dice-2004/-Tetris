@@ -100,6 +100,7 @@ class Game:
 
         self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string)
         self.root.after(self.time, self.fall)
+        self.tetromino["shaft"][1] += 1
 
         # print(self.MAP.map)
 

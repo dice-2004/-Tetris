@@ -15,7 +15,7 @@ class Field:
 
     def __post_init__(self):
         self.map = [
-            [10 if (x == self.rows - 1 or y in {0, self.cols - 1}) else 0 for y in range(self.cols)]
+            [20 if y == 0 else 30 if y == self.cols - 1 else 10 if x == self.rows - 1 else 0 for y in range(self.cols)]
             for x in range(self.rows)
         ]
         self.score:int = 0
@@ -142,7 +142,58 @@ class Field:
                 print(self.score)
 
     def L_spin(self,possition:Dict[str,List[List[int]]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
-        pass
+        for block in possition["tetro"]:
+            self.map[block[y]][block[x]] = 0
+        for block in possition["tetro"]:
+            block[x] =block[x]-possition["shaft"][x]
+            block[y] =block[y]-possition["shaft"][y]
+        for block in possition["tetro"]:
+            block[x],block[y] = -block[y],block[x]
+        for block in possition["tetro"]:
+            block[x] =block[x]+possition["shaft"][x]
+            block[y] =block[y]+possition["shaft"][y]
+        for block in possition["tetro"]:
+            match(string):
+                case "I":
+                    self.map[block[y]][block[x]] = 1
+                case "O":
+                    self.map[block[y]][block[x]] = 2
+                case "S":
+                    self.map[block[y]][block[x]] = 3
+                case "Z":
+                    self.map[block[y]][block[x]] = 4
+                case "J":
+                    self.map[block[y]][block[x]] = 5
+                case "L":
+                    self.map[block[y]][block[x]] = 6
+                case "T":
+                    self.map[block[y]][block[x]] = 7
+
 
     def R_spin(self,possition:Dict[str,List[List[int]]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
-        pass
+        for block in possition["tetro"]:
+            self.map[block[y]][block[x]] = 0
+        for block in possition["tetro"]:
+            block[x] =block[x]-possition["shaft"][x]
+            block[y] =block[y]-possition["shaft"][y]
+        for block in possition["tetro"]:
+            block[x],block[y] = -block[y],block[x]
+        for block in possition["tetro"]:
+            block[x] =block[x]+possition["shaft"][x]
+            block[y] =block[y]+possition["shaft"][y]
+        for block in possition["tetro"]:
+            match(string):
+                case "I":
+                    self.map[block[y]][block[x]] = 1
+                case "O":
+                    self.map[block[y]][block[x]] = 2
+                case "S":
+                    self.map[block[y]][block[x]] = 3
+                case "Z":
+                    self.map[block[y]][block[x]] = 4
+                case "J":
+                    self.map[block[y]][block[x]] = 5
+                case "L":
+                    self.map[block[y]][block[x]] = 6
+                case "T":
+                    self.map[block[y]][block[x]] = 7
