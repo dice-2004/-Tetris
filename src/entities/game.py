@@ -49,7 +49,9 @@ class Game:
         self.root.bind("<Left>", self.left)
         self.root.bind("<Up>", self.fall_all)
         self.root.bind("<KeyPress>", self.spin)
-        self.root.bind("<Escape>", self.pause)
+        self.root.bind("<KeyPress-d>", self.pause)
+        self.root.bind("<KeyPress-D>", self.pause)
+        self.root.bind("<Escape>", self.exit)
 
     def unbind_keys(self):
         self.root.unbind("<Down>")
@@ -131,7 +133,7 @@ class Game:
             self.MAP.L_spin(self.tetromino, self.string)
         print("spin")
 
-    def pause(self, event):
+    def pause(self, event =None) -> None:
         if not self.paused:
             self.paused = True
             self.root.after_cancel(self.fall_id)
@@ -143,10 +145,14 @@ class Game:
             self.bind_keys()
             print("Resumed")
 
+    def exit(self, event=None):
+        self.root.after_cancel(self.fall_id)
+        self.root.destroy()
+
     def game_over_observer(self) -> None:
         if self.MAP.is_game_over():
             print("Game Over")
-            
+
             self.root.destroy()
             self.game_over_flag: bool = True
             return
