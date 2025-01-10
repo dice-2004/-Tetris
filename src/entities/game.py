@@ -29,7 +29,7 @@ class Game:
         self.min_interval: float = 0.22  # (s)
         self.is_falled: bool = False
         self.game_over_flag: bool = False
-        self.string: str = "I"#random.choice(list(self.mode.Tetromino.keys()))
+        self.string: str = "L"#random.choice(list(self.mode.Tetromino.keys()))
         # self.string:str="I"
         self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
         self.root: tk.Tk = tk.Tk()
