@@ -179,6 +179,7 @@ class Field:
                     self.map[block[y]][block[x]] = 7
 
 
+
     def R_spin(self,possition:Dict[str,List[List[int]]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         for block in possition["tetro"]:
             self.map[block[y]][block[x]] = 0
