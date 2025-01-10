@@ -3,7 +3,7 @@ from .dataclass import HIKAKIN, KAKIN, FIELD
 import random
 from time import time
 from pprint import pprint
-from typing import Callable
+from typing import Callable,List
 import copy
 
 
@@ -22,16 +22,17 @@ class Game:
         with open("src/entities/dataclass/map.txt", "w") as f:
             for row in self.MAP.map:
                 f.write(" ".join(map(str, row)) + "\n")
-
         self.last_key_time: float = 0  # (s)
         self.min_interval: float = 0.22  # (s)
         self.is_falled: bool = False
         self.game_over_flag: bool = False
-        self.string: str = random.choice(list(self.mode.Tetromino.keys()))
-        self.next_string: str = random.choice(list(self.mode.Tetromino.keys()))
+        self.strings: List[str] = []
+        self.gen_string()
+        print(self.strings)
+
         self.paused: bool = False
         # self.string:str="I"
-        self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
+        self.tetromino = copy.deepcopy(self.mode.Tetromino[self.strings[0]])
         self.root: tk.Tk = tk.Tk()
         self.root.title("Tetris")
         self.root.geometry("500x500")
@@ -80,7 +81,7 @@ class Game:
             return
         if time() - self.last_key_time < self.min_interval:
             return
-        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string, self.tetromino["shaft"])
+        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.strings[0], self.tetromino["shaft"])
         self.last_key_time = time()
         print("↓")
 
@@ -88,7 +89,7 @@ class Game:
     def right(self, event) -> None:
         if time() - self.last_key_time < self.min_interval:
             return
-        self.MAP.right(self.tetromino["tetro"], self.string,self.tetromino["shaft"])
+        self.MAP.right(self.tetromino["tetro"], self.strings[0],self.tetromino["shaft"])
         print("→")
         print(self.tetromino["shaft"])
 
@@ -96,7 +97,7 @@ class Game:
     def left(self, event) -> None:
         if time() - self.last_key_time < self.min_interval:
             return
-        self.MAP.left(self.tetromino["tetro"], self.string,self.tetromino["shaft"])
+        self.MAP.left(self.tetromino["tetro"], self.strings[0],self.tetromino["shaft"])
         self.tetromino["shaft"][0] -= 1
         print("←")
         print(self.tetromino["shaft"])
@@ -106,17 +107,18 @@ class Game:
         if self.game_over_flag:
             return
         elif self.is_falled == True:
-            self.prev_string = self.string
-            self.string = self.next_string
-            self.next_string: str = random.choice(list(self.mode.Tetromino.keys()))
-            while self.prev_string == self.string:
-                self.next_string: str = random.choice(list(self.mode.Tetromino.keys()))
-            # self.string:str="I"
-            self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
+            self.tetromino = copy.deepcopy(self.mode.Tetromino[self.strings[0]])
+            self.strings.pop(0)
+            G_string = random.choice(list(self.mode.Tetromino.keys()))
+            while G_string == self.strings[-2]:
+                G_string = random.choice(list(self.mode.Tetromino.keys()))
+            self.strings.append(G_string)
+            print(self.strings)
+
             self.is_falled = False
             self.time = self.default_time
 
-        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string, self.tetromino["shaft"])
+        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.strings[0], self.tetromino["shaft"])
         self.fall_id =self.root.after(self.time, self.fall)
 
         # print(self.MAP.map)
@@ -130,9 +132,9 @@ class Game:
         if time() - self.last_key_time < self.min_interval or self.string == "O":
             return
         if event.keysym == "c":
-            self.MAP.R_spin(self.tetromino, self.string)
+            self.MAP.R_spin(self.tetromino, self.strings[0])
         elif event.keysym == "z":
-            self.MAP.L_spin(self.tetromino, self.string)
+            self.MAP.L_spin(self.tetromino, self.strings[0])
         print("spin")
 
     def pause(self, event =None) -> None:
@@ -150,6 +152,15 @@ class Game:
     def exit(self, event=None):
         self.root.after_cancel(self.fall_id)
         self.root.destroy()
+
+    def gen_string(self) -> None:
+        self.strings.append(random.choice(list(self.mode.Tetromino.keys())))
+        for i in range(1,4):
+            string = random.choice(list(self.mode.Tetromino.keys()))
+            while self.strings[i-1] == string:
+                string= random.choice(list(self.mode.Tetromino.keys()))
+            self.strings.append(string)
+
 
     def game_over_observer(self) -> None:
         if self.MAP.is_game_over():
