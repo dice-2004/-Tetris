@@ -1,9 +1,11 @@
 import dataclasses
+
 from typing import List, Dict, Literal
 from time import sleep
 
 x = 0
 y = 1
+
 
 
 #  0=Enpty 1=active_I   2=active_O   3=active_S   4=active_Z   5=active_J   6=active_L   7=active_T
@@ -16,31 +18,23 @@ class Field:
 
     def __post_init__(self):
         self.map = [
-            [
-                (
-                    20
-                    if y == 0
-                    else 30 if y == self.cols - 1 else 10 if x == self.rows - 1 else 0
-                )
-                for y in range(self.cols)
-            ]
+
+            [20 if y == 0 else 30 if y == self.cols - 1 else 10 if x == self.rows - 1 else 0 for y in range(self.cols)]
             for x in range(self.rows)
         ]
-        self.score: int = 0
+        self.score:int = 0
 
-    def fall_all(
-        self,
-        possition: List[List[int]],
-        string: Literal["I", "O", "S", "Z", "J", "L", "T"],
-    ) -> None:
+    def fall_all(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         for block in possition:
             self.map[block[y]][block[x]] = 0
 
         while True:
             for block in possition:
+
                 if self.map[block[y] + 1][block[x]] >= 10:
                     for block in possition:
                         match (string):
+
                             case "I":
                                 self.map[block[y]][block[x]] = 11
                             case "O":
@@ -58,16 +52,15 @@ class Field:
                                 self.delete()
                                 return True
                 else:
-                    block[y] += 1
 
-    def down(
-        self,
-        possition: List[List[int]],
-        string: Literal["I", "O", "S", "Z", "J", "L", "T"],
-    ) -> bool:
+                    block[y]+=1
+
+
+
+    def down(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> bool:
         print(possition)
         for block in possition:
-            if self.map[block[y] + 1][block[x]] >= 10:
+            if self.map[block[y]+1][block[x]] >= 10:
                 for block in possition:
                     self.map[block[y]][block[x]] += 10
                 self.delete()
@@ -77,6 +70,7 @@ class Field:
             block[y] += 1
         for block in possition:
             match (string):
+
                 case "I":
                     self.map[block[y]][block[x]] = 1
                 case "O":
@@ -93,20 +87,20 @@ class Field:
                     self.map[block[y]][block[x]] = 7
         return False
 
-    def right(
-        self,
-        possition: List[List[int]],
-        string: Literal["I", "O", "S", "Z", "J", "L", "T"],
-    ) -> None:
+
+    def right(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         for block in possition:
-            if self.map[block[y]][block[x] + 1] >= 10:
+            if self.map[block[y]][block[x]+1] >= 10:
+
                 return
 
         for block in possition:
             self.map[block[y]][block[x]] = 0
+
             block[x] += 1
         for block in possition:
             match (string):
+
                 case "I":
                     self.map[block[y]][block[x]] = 1
                 case "O":
@@ -123,20 +117,20 @@ class Field:
                     self.map[block[y]][block[x]] = 7
         return
 
-    def left(
-        self,
-        possition: List[List[int]],
-        string: Literal["I", "O", "S", "Z", "J", "L", "T"],
-    ) -> None:
+
+    def left(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         for block in possition:
-            if self.map[block[y]][block[x] - 1] >= 10:
+            if self.map[block[y]][block[x]-1] >= 10:
+
                 return
 
         for block in possition:
             self.map[block[y]][block[x]] = 0
+
             block[x] -= 1
         for block in possition:
             match (string):
+
                 case "I":
                     self.map[block[y]][block[x]] = 1
                 case "O":
@@ -152,6 +146,7 @@ class Field:
                 case "T":
                     self.map[block[y]][block[x]] = 7
         return
+
 
     def delete(self) -> None:
         for i in range(1, self.rows - 1):
@@ -205,6 +200,7 @@ class Field:
                 case "T":
                     self.map[block[y]][block[x]] = 7
 
+
     def R_spin(
         self,
         possition: Dict[str, List[List[int]]],
@@ -234,6 +230,7 @@ class Field:
             possition["shaft"][x] -= 1
         for block in possition["tetro"]:
             match (string):
+
                 case "I":
                     self.map[block[y]][block[x]] = 1
                 case "O":
@@ -248,6 +245,7 @@ class Field:
                     self.map[block[y]][block[x]] = 6
                 case "T":
                     self.map[block[y]][block[x]] = 7
+
 
     def I_spin(
         self, possition: Dict[str, List[List[int]]], string: Literal["L", "R"]
@@ -296,3 +294,4 @@ class Field:
 # (2,1)(2,2)(2,3)(2,4) 1
 # (4,2)(3,2)(2,2)(1,2) 2
 # (3,4)(3,3)(3,2)(3,1) 3
+
