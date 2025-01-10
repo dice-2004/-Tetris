@@ -27,7 +27,8 @@ class Game:
         self.min_interval: float = 0.22  # (s)
         self.is_falled: bool = False
         self.game_over_flag: bool = False
-        self.string: str = "L"#random.choice(list(self.mode.Tetromino.keys()))
+        self.string: str = random.choice(list(self.mode.Tetromino.keys()))
+        self.next_string: str = random.choice(list(self.mode.Tetromino.keys()))
         self.paused: bool = False
         # self.string:str="I"
         self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
@@ -106,9 +107,10 @@ class Game:
             return
         elif self.is_falled == True:
             self.prev_string = self.string
-            self.string: str = random.choice(list(self.mode.Tetromino.keys()))
+            self.string = self.next_string
+            self.next_string: str = random.choice(list(self.mode.Tetromino.keys()))
             while self.prev_string == self.string:
-                self.string: str = random.choice(list(self.mode.Tetromino.keys()))
+                self.next_string: str = random.choice(list(self.mode.Tetromino.keys()))
             # self.string:str="I"
             self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
             self.is_falled = False
