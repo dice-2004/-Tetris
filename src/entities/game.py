@@ -9,9 +9,7 @@ import copy
 
 class Game:
     # rows,cols=22,12 # <-20*10
-    def __init__(
-        self, mode: int, time: int = 1000, rows: int = 23, cols: int = 12
-    ) -> None:
+    def __init__(self, mode: int, time: int = 1000, rows: int = 23, cols: int = 12) -> None:
         self.default_time = time
         self.time = time
         if mode == 0:
@@ -42,10 +40,8 @@ class Game:
         self.root.bind("<Left>", self.left)
         self.root.bind("<Up>", self.fall_all)
         self.root.bind("<KeyPress>", self.spin)
+        self.root.bind("<Escape>", self.pause)
 
-        self.fall()
-        self.fall()
-        self.fall()
         self.fall()
         self.game_over_observer()
         self.root.mainloop()
@@ -70,26 +66,26 @@ class Game:
             return
         if time() - self.last_key_time < self.min_interval:
             return
-        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string)
+        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string, self.tetromino["shaft"])
         self.last_key_time = time()
-        self.tetromino["shaft"][1] += 1
         print("↓")
 
     @update
     def right(self, event) -> None:
         if time() - self.last_key_time < self.min_interval:
             return
-        self.MAP.right(self.tetromino["tetro"], self.string)
-        self.tetromino["shaft"][0] += 1
+        self.MAP.right(self.tetromino["tetro"], self.string,self.tetromino["shaft"])
         print("→")
+        print(self.tetromino["shaft"])
 
     @update
     def left(self, event) -> None:
         if time() - self.last_key_time < self.min_interval:
             return
-        self.MAP.left(self.tetromino["tetro"], self.string)
+        self.MAP.left(self.tetromino["tetro"], self.string,self.tetromino["shaft"])
         self.tetromino["shaft"][0] -= 1
         print("←")
+        print(self.tetromino["shaft"])
 
     @update
     def fall(self) -> None:
@@ -105,9 +101,8 @@ class Game:
             self.is_falled = False
             self.time = self.default_time
 
-        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string)
+        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string, self.tetromino["shaft"])
         # self.root.after(self.time, self.fall)
-        self.tetromino["shaft"][1] += 1
 
         # print(self.MAP.map)
 
@@ -124,6 +119,9 @@ class Game:
         elif event.keysym == "z":
             self.MAP.L_spin(self.tetromino, self.string)
         print("spin")
+
+    def pause(self, event) -> None:
+        self.root.quit()
 
     def game_over_observer(self) -> None:
         if self.MAP.is_game_over():

@@ -13,8 +13,8 @@ class hikakin:
             "I": {
                 "shaft": [self.BASE["x"], self.BASE["y"]],
                 "tetro": [
-                    [self.BASE["x"] - 1, self.BASE["y"]],
                     [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] - 1, self.BASE["y"]],
                     [self.BASE["x"] + 1, self.BASE["y"]],
                     [self.BASE["x"] + 2, self.BASE["y"]],
                 ],
