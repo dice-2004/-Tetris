@@ -176,6 +176,9 @@ class Field:
         for block in possition["tetro"]:
             block[x] = block[x] + possition["shaft"][x]
             block[y] = block[y] + possition["shaft"][y]
+        # if string == "I":
+        #     possition["spin_C"] -= 1
+        #     self.I_spin(possition, "L")
         while any(self.map[block[y]][block[x]] == 20 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] += 1
@@ -214,9 +217,13 @@ class Field:
             block[y] = block[y] - possition["shaft"][y]
         for block in possition["tetro"]:
             block[x], block[y] = block[y], -block[x]
+
         for block in possition["tetro"]:
             block[x] = block[x] + possition["shaft"][x]
             block[y] = block[y] + possition["shaft"][y]
+        # if string == "I":
+        #     possition["spin_C"] += 1
+        #     self.I_spin(possition, "R")
         while any(self.map[block[y]][block[x]] == 20 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] += 1
@@ -242,44 +249,43 @@ class Field:
                 case "T":
                     self.map[block[y]][block[x]] = 7
 
-    # def I_spin(
-    #     self, possition: Dict[str, List[List[int]]], string: Literal["L", "R"]
-    # ) -> None:
-    #     # 3→0→1→2
-    #     if string == "L":
-    #         print("L")
-    #         print(possition["spin_C"]%4)
-    #         match (possition["spin_C"] % 4):
-    #             case 0:
-    #                 possition["tetro"][1][x] -= 1
-    #                 possition["shaft"][x] -= 1
-    #             case 1:
-    #                 possition["tetro"][1][y] -= 1
-    #                 possition["shaft"][y] -= 1
-    #             case 2:
-    #                 possition["tetro"][1][x] += 1
-    #                 possition["shaft"][x] += 1
-    #             case 3:
-    #                 possition["tetro"][1][y] += 1
-    #                 possition["shaft"][y] += 1
-    #     # 1→0→3→2
-    #     elif string == "R":
-    #         print("R")
-    #         print(possition["spin_C"] % 4)
-
-    #         match (possition["spin_C"] % 4):
-    #             case 0:
-    #                 possition["tetro"][1][y] -= 1
-    #                 possition["shaft"][y] -= 1
-    #             case 1:
-    #                 possition["tetro"][1][x] -= 1
-    #                 possition["shaft"][x] -= 1
-    #             case 2:
-    #                 possition["tetro"][1][y] += 1
-    #                 possition["shaft"][y] += 1
-    #             case 3:
-    #                 possition["tetro"][1][x] += 1
-    #                 possition["shaft"][x] += 1
+    def I_spin(
+        self, possition: Dict[str, List[List[int]]], string: Literal["L", "R"]
+    ) -> None:
+        # 3→0→1→2
+        # if string == "R":
+        #     print("R")
+        #     print(possition["spin_C"]%4)
+        #     match (possition["spin_C"] % 4):
+        #         case 0:
+        #             possition["tetro"][1][x] -= 1
+        #             possition["shaft"][x] -= 1
+        #         case 1:
+        #             possition["tetro"][1][y] -= 1
+        #             possition["shaft"][y] -= 1
+        #         case 2:
+        #             possition["tetro"][1][x] += 1
+        #             possition["shaft"][x] += 1
+        #         case 3:
+        #             possition["tetro"][1][y] += 1
+        #             possition["shaft"][y] += 1
+        # # 1→0→3→2
+        # elif string == "L":
+        #     print("L")
+        #     print(possition["spin_C"] % 4)
+        #     match (possition["spin_C"] % 4):
+        #         case 0:
+        #             possition["tetro"][1][y] += 1
+        #             possition["shaft"][y] += 1
+        #         case 1:
+        #             possition["tetro"][1][x] -= 1
+        #             possition["shaft"][x] -= 1
+        #         case 2:
+        #             possition["tetro"][1][y] -= 1
+        #             possition["shaft"][y] -= 1
+        #         case 3:
+        #             possition["tetro"][1][x] += 1
+        #             possition["shaft"][x] += 1
 
 
     def is_game_over(self) -> bool:
