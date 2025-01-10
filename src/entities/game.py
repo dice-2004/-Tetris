@@ -7,6 +7,7 @@ from typing import Callable,List
 import copy
 
 
+
 class Game:
     # rows,cols=22,12 # <-20*10
     def __init__(self, mode: int, time: int = 1000, rows: int = 23, cols: int = 12) -> None:
