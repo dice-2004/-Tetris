@@ -28,6 +28,7 @@ class Game:
         self.last_key_time: float = 0  # (s)
         self.min_interval: float = 0.22  # (s)
         self.is_falled: bool = False
+        self.game_over_flag: bool = False
         self.string: str = random.choice(list(self.mode.Tetromino.keys()))
         # self.string:str="I"
         self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
@@ -43,6 +44,7 @@ class Game:
         self.root.bind("<KeyPress>", self.spin)
 
         self.fall()
+        self.game_over_observer()
         self.root.mainloop()
         # データクラスの書き換え
 
@@ -88,7 +90,9 @@ class Game:
 
     @update
     def fall(self) -> None:
-        if self.is_falled == True:
+        if self.game_over_flag:
+            return
+        elif self.is_falled == True:
             self.prev_string = self.string
             self.string: str = random.choice(list(self.mode.Tetromino.keys()))
             while self.prev_string == self.string:
@@ -118,7 +122,13 @@ class Game:
             self.MAP.L_spin(self.tetromino, self.string)
         print("spin")
 
-
+    def game_over_observer(self) -> None:
+        if self.MAP.is_game_over():
+            print("Game Over")
+            self.root.destroy()
+            self.game_over_flag: bool = True
+            return
+        self.root.after(1, self.game_over_observer)
 
 if __name__ == "__main__":
     # import ctypes

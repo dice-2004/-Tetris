@@ -216,3 +216,6 @@ class Field:
                     self.map[block[y]][block[x]] = 6
                 case "T":
                     self.map[block[y]][block[x]] = 7
+
+    def is_game_over(self) -> bool:
+        return any(self.map[1][x] >= 10 for x in range(1,self.cols-1))
