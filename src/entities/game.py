@@ -29,7 +29,7 @@ class Game:
         self.min_interval: float = 0.22  # (s)
         self.is_falled: bool = False
         self.game_over_flag: bool = False
-        self.string: str = random.choice(list(self.mode.Tetromino.keys()))
+        self.string: str = "L"#random.choice(list(self.mode.Tetromino.keys()))
         # self.string:str="I"
         self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
         self.root: tk.Tk = tk.Tk()
@@ -43,6 +43,9 @@ class Game:
         self.root.bind("<Up>", self.fall_all)
         self.root.bind("<KeyPress>", self.spin)
 
+        self.fall()
+        self.fall()
+        self.fall()
         self.fall()
         self.game_over_observer()
         self.root.mainloop()
@@ -103,7 +106,7 @@ class Game:
             self.time = self.default_time
 
         self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string)
-        self.root.after(self.time, self.fall)
+        # self.root.after(self.time, self.fall)
         self.tetromino["shaft"][1] += 1
 
         # print(self.MAP.map)
@@ -114,7 +117,7 @@ class Game:
 
     @update
     def spin(self, event) -> None:
-        if time() - self.last_key_time < self.min_interval:
+        if time() - self.last_key_time < self.min_interval or self.string == "O":
             return
         if event.keysym == "c":
             self.MAP.R_spin(self.tetromino, self.string)
