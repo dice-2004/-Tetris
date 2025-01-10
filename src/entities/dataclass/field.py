@@ -152,6 +152,15 @@ class Field:
         for block in possition["tetro"]:
             block[x] =block[x]+possition["shaft"][x]
             block[y] =block[y]+possition["shaft"][y]
+        while any(self.map[block[y]][block[x]] == 20 for block in possition["tetro"]):
+            for block in possition["tetro"]:
+                block[x]+=1
+            possition["shaft"][x]+=1
+        while any(self.map[block[y]][block[x]] == 30 for block in possition["tetro"]):
+            for block in possition["tetro"]:
+                block[x]-=1
+            possition["shaft"][x]-=1
+
         for block in possition["tetro"]:
             match(string):
                 case "I":
@@ -181,6 +190,15 @@ class Field:
         for block in possition["tetro"]:
             block[x] =block[x]+possition["shaft"][x]
             block[y] =block[y]+possition["shaft"][y]
+
+        while any(self.map[block[y]][block[x]] == 20 for block in possition["tetro"]):
+            for block in possition["tetro"]:
+                block[x]+=1
+            possition["shaft"][x]+=1
+        while any(self.map[block[y]][block[x]] == 30 for block in possition["tetro"]):
+            for block in possition["tetro"]:
+                block[x]-=1
+            possition["shaft"][x]-=1
         for block in possition["tetro"]:
             match(string):
                 case "I":
