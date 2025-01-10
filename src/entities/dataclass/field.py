@@ -51,6 +51,7 @@ class Field:
 
 
     def down(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> bool:
+        print(possition)
         for block in possition:
             if self.map[block[y]+1][block[x]] >= 10:
                 for block in possition:
@@ -140,8 +141,8 @@ class Field:
                 self.score+=1
                 print(self.score)
 
-    def L_spin(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
+    def L_spin(self,possition:Dict[str,List[List[int]]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         pass
 
-    def R_spin(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
+    def R_spin(self,possition:Dict[str,List[List[int]]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         pass

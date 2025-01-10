@@ -12,6 +12,7 @@ class Game:
     def __init__(
         self, mode: int, time: int = 1000, rows: int = 23, cols: int = 12
     ) -> None:
+        self.default_time = time
         self.time = time
         if mode == 0:
             self.mode = KAKIN.Kakin({"x": int(cols / 2), "y": 0})
@@ -40,6 +41,7 @@ class Game:
         self.root.bind("<Left>", self.left)
         self.root.bind("<Up>", self.fall_all)
         self.root.bind("<KeyPress>", self.spin)
+
         self.fall()
         self.root.mainloop()
         # データクラスの書き換え
@@ -63,22 +65,25 @@ class Game:
             return
         if time() - self.last_key_time < self.min_interval:
             return
-        self.is_falled = self.MAP.down(self.tetromino, self.string)
+        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string)
         self.last_key_time = time()
+        self.tetromino["shaft"][1] += 1
         print("↓")
 
     @update
     def right(self, event) -> None:
         if time() - self.last_key_time < self.min_interval:
             return
-        self.MAP.right(self.tetromino, self.string)
+        self.MAP.right(self.tetromino["tetro"], self.string)
+        self.tetromino["shaft"][0] += 1
         print("→")
 
     @update
     def left(self, event) -> None:
         if time() - self.last_key_time < self.min_interval:
             return
-        self.MAP.left(self.tetromino, self.string)
+        self.MAP.left(self.tetromino["tetro"], self.string)
+        self.tetromino["shaft"][0] -= 1
         print("←")
 
     @update
@@ -91,23 +96,16 @@ class Game:
             # self.string:str="I"
             self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
             self.is_falled = False
+            self.time = self.default_time
 
-        self.is_falled = self.MAP.down(self.tetromino, self.string)
+        self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string)
         self.root.after(self.time, self.fall)
 
         # print(self.MAP.map)
 
     @update
     def fall_all(self, event) -> None:
-        self.MAP.fall_all(self.tetromino, self.string)
-        print("↑")
-        self.prev_string = self.string
-        self.string: str = random.choice(list(self.mode.Tetromino.keys()))
-        while self.prev_string == self.string:
-            self.string: str = random.choice(list(self.mode.Tetromino.keys()))
-        # self.string:str="I"
-        self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
-        self.is_falled = False
+        self.time = 10
 
     @update
     def spin(self, event) -> None:
@@ -118,6 +116,7 @@ class Game:
         elif event.keysym == "z":
             self.MAP.L_spin(self.tetromino, self.string)
         print("spin")
+
 
 
 if __name__ == "__main__":

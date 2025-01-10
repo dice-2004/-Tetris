@@ -1,28 +1,35 @@
 import dataclasses
-from typing import List, Dict,Literal
+from typing import List, Dict, Literal
 
 
 # 幅10、高さ20、左上原点の座標系上に描写
 @dataclasses.dataclass
 class Kakin:
-    SHAFT:Dict[Literal["x","y"],int]
+    BASE: Dict[Literal["x", "y"], int]
 
     def __post_init__(self):
-        self.Tetromino:Dict[str,List[List[int]]] = {
-    #ex)    "D": [[x, y], [x, y], [x, y], [x, y]],
-            "I": [
-                [self.SHAFT["x"] - 1, self.SHAFT["y"]],
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] + 2, self.SHAFT["y"]],
-            ],
-            "O": [
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"], self.SHAFT["y"] + 1],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"] + 1],
-            ],
+        self.Tetromino: Dict[str, List[List[int]]] = {
+            # ex)    "D": [[x, y], [x, y], [x, y], [x, y]],
+            "I": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"] - 1, self.BASE["y"]],
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"]],
+                    [self.BASE["x"] + 2, self.BASE["y"]],
+                ],
+            },
+            "O": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"]],
+                    [self.BASE["x"], self.BASE["y"] + 1],
+                    [self.BASE["x"] + 1, self.BASE["y"] + 1],
+                ],
+            },
         }
+
 
 #  0,1,2,3,4,5,6,7,8,9
 #  1

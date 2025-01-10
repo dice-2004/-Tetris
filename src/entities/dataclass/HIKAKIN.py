@@ -5,53 +5,74 @@ from typing import List, Dict, Literal
 # 幅10、高さ20、左下原点の座標系上に描写
 @dataclasses.dataclass
 class hikakin:
-    SHAFT: Dict[Literal["x", "y"], int]
+    BASE: Dict[Literal["x", "y"], int]
 
     def __post_init__(self):
         self.Tetromino: Dict[str, List[List[int]]] = {
             # ex)    "D": [[x, y], [x, y], [x, y], [x, y]],
-            "I": [
-                [self.SHAFT["x"] - 1, self.SHAFT["y"]],
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] + 2, self.SHAFT["y"]],
-            ],
-            "O": [
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"], self.SHAFT["y"] + 1],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"] + 1],
-            ],
-            "S": [
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] , self.SHAFT["y"] + 1],
-                [self.SHAFT["x"] -1, self.SHAFT["y"] + 1],
-            ],
-            "Z": [
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] - 1, self.SHAFT["y"]],
-                [self.SHAFT["x"], self.SHAFT["y"] + 1],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"] + 1],
-            ],
-            "J": [
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] - 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"] + 1],
-            ],
-            "L": [
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] - 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] - 1, self.SHAFT["y"] + 1],
-            ],
-            "T": [
-                [self.SHAFT["x"], self.SHAFT["y"]],
-                [self.SHAFT["x"] - 1, self.SHAFT["y"]],
-                [self.SHAFT["x"] + 1, self.SHAFT["y"]],
-                [self.SHAFT["x"], self.SHAFT["y"] + 1],
-            ],
+            "I": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"] - 1, self.BASE["y"]],
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"]],
+                    [self.BASE["x"] + 2, self.BASE["y"]],
+                ],
+            },
+            "O": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"]],
+                    [self.BASE["x"], self.BASE["y"] + 1],
+                    [self.BASE["x"] + 1, self.BASE["y"] + 1],
+                ],
+            },
+            "S": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"]],
+                    [self.BASE["x"], self.BASE["y"] + 1],
+                    [self.BASE["x"] - 1, self.BASE["y"] + 1],
+                ],
+            },
+            "Z": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] - 1, self.BASE["y"]],
+                    [self.BASE["x"], self.BASE["y"] + 1],
+                    [self.BASE["x"] + 1, self.BASE["y"] + 1],
+                ],
+            },
+            "J": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] - 1, self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"] + 1],
+                ],
+            },
+            "L": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] - 1, self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"]],
+                    [self.BASE["x"] - 1, self.BASE["y"] + 1],
+                ],
+            },
+            "T": {
+                "shaft": [self.BASE["x"], self.BASE["y"]],
+                "tetro": [
+                    [self.BASE["x"], self.BASE["y"]],
+                    [self.BASE["x"] - 1, self.BASE["y"]],
+                    [self.BASE["x"] + 1, self.BASE["y"]],
+                    [self.BASE["x"], self.BASE["y"] + 1],
+                ],
+            },
         }
 
 
