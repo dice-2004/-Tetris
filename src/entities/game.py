@@ -28,6 +28,7 @@ class Game:
         self.is_falled: bool = False
         self.game_over_flag: bool = False
         self.string: str = "L"#random.choice(list(self.mode.Tetromino.keys()))
+        self.paused: bool = False
         # self.string:str="I"
         self.tetromino = copy.deepcopy(self.mode.Tetromino[self.string])
         self.root: tk.Tk = tk.Tk()
@@ -35,6 +36,14 @@ class Game:
         self.root.geometry("500x500")
         # self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
+        self.bind_keys()
+
+        self.fall()
+        self.game_over_observer()
+        self.root.mainloop()
+        # データクラスの書き換え
+
+    def bind_keys(self):
         self.root.bind("<Down>", self.down)
         self.root.bind("<Right>", self.right)
         self.root.bind("<Left>", self.left)
@@ -42,10 +51,12 @@ class Game:
         self.root.bind("<KeyPress>", self.spin)
         self.root.bind("<Escape>", self.pause)
 
-        self.fall()
-        self.game_over_observer()
-        self.root.mainloop()
-        # データクラスの書き換え
+    def unbind_keys(self):
+        self.root.unbind("<Down>")
+        self.root.unbind("<Right>")
+        self.root.unbind("<Left>")
+        self.root.unbind("<Up>")
+        self.root.unbind("<KeyPress>")
 
     def update(func: Callable) -> Callable:
         def wapper(self, event=None) -> None:
@@ -102,7 +113,7 @@ class Game:
             self.time = self.default_time
 
         self.is_falled = self.MAP.down(self.tetromino["tetro"], self.string, self.tetromino["shaft"])
-        # self.root.after(self.time, self.fall)
+        self.fall_id =self.root.after(self.time, self.fall)
 
         # print(self.MAP.map)
 
@@ -120,12 +131,22 @@ class Game:
             self.MAP.L_spin(self.tetromino, self.string)
         print("spin")
 
-    def pause(self, event) -> None:
-        self.root.quit()
+    def pause(self, event):
+        if not self.paused:
+            self.paused = True
+            self.root.after_cancel(self.fall_id)
+            self.unbind_keys()
+            print("Paused")
+        else:
+            self.paused = False
+            self.fall_id = self.root.after(self.time, self.fall)
+            self.bind_keys()
+            print("Resumed")
 
     def game_over_observer(self) -> None:
         if self.MAP.is_game_over():
             print("Game Over")
+            
             self.root.destroy()
             self.game_over_flag: bool = True
             return
