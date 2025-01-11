@@ -130,7 +130,7 @@ class Game:
 
     @update
     def spin(self, event) -> None:
-        if time() - self.last_key_time < self.min_interval or self.string == "O":
+        if time() - self.last_key_time < self.min_interval or self.strings[0] == "O":
             return
         if event.keysym == "c":
             self.MAP.R_spin(self.tetromino, self.strings[0])
