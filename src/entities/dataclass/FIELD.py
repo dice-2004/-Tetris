@@ -28,9 +28,9 @@ class Field:
             3: 500,
             4: 800
         }
-        combo_bonus = self.combo * 50 if self.combo > 1 else 0
-        level_bonus = self.level * 1.2
-        score = int(base_points.get(lines_cleared, 0) * level_bonus + combo_bonus)
+        combo_bonus = self.combo * 50 if self.combo >= 1 else 0
+        score = int(base_points.get(lines_cleared, 0) + combo_bonus)
+        print(f"Base: {base_points.get(lines_cleared, 0)} | Combo: {combo_bonus}")
         return score
 
     def update_level(self) -> None:
