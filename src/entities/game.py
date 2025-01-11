@@ -41,6 +41,13 @@ class Game:
         self.root.focus_force()
         self.bind_keys()
 
+        self.score_label = tk.Label(self.root, text="Score: 0", font=('Arial', 14))
+        self.score_label.pack(pady=5)
+        self.level_label = tk.Label(self.root, text="Level: 1", font=('Arial', 14))
+        self.level_label.pack(pady=5)
+
+        self.update_score_display()
+
         self.fall()
         self.game_over_observer()
         self.root.mainloop()
@@ -62,6 +69,20 @@ class Game:
         self.root.unbind("<Left>")
         self.root.unbind("<Up>")
         self.root.unbind("<KeyPress>")
+
+    def update_score_display(self) -> None:
+        """スコアとレベルの表示を更新"""
+        try:
+            self.score_label.config(text=f"Score: {self.MAP.score}")
+            self.level_label.config(text=f"Level: {self.MAP.level}")
+            
+            # 落下速度をレベルに応じて調整（最小100ms）
+            # self.default_time = max(100, 1000 - (self.MAP.level - 1) * 50)
+            
+            if not self.game_over_flag:
+                self.root.after(100, self.update_score_display)
+        except Exception as e:
+            print(f"Error updating score display: {e}")
 
     def update(func: Callable) -> Callable:
         def wapper(self, event=None) -> None:
