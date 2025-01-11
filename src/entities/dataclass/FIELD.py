@@ -116,8 +116,8 @@ class Field:
             block[x] = block[x] - shaft[x]
             block[y] = block[y] - shaft[y]
         for block in possition["tetro"]:
-            print(self.map[block[x],shaft[y]][-block[y]+shaft[x]])
-            if self.map[-block[y]+shaft[y]][block[x]+shaft[x]] >= 10:
+            print(self.map[block[x]+shaft[y]][-block[y]+shaft[x]])
+            if self.map[block[x]+shaft[y]][-block[y]+shaft[x]] >= 10:
                 for block in possition["tetro"]:
                     block[x] = block[x] + shaft[x]
                     block[y] = block[y] + shaft[y]
@@ -175,7 +175,7 @@ class Field:
             block[y] = block[y] - shaft[y]
         for block in possition["tetro"]:
             print(self.map[-block[x]+shaft[y]][block[y]+shaft[x]])
-            if self.map[block[y]+shaft[y]][-block[x]+shaft[x]] >= 10:
+            if self.map[-block[x]+shaft[y]][block[y]+shaft[x]] >= 10:
                 for block in possition["tetro"]:
                     block[x] = block[x] + shaft[x]
                     block[y] = block[y] + shaft[y]
