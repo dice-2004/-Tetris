@@ -84,23 +84,7 @@ class Field:
             self.map[block[y]][block[x]] = 0
             block[y] += 1
         # shaft[y] += 1
-        for block in possition:
-            match (string):
-
-                case "I":
-                    self.map[block[y]][block[x]] = 1
-                case "O":
-                    self.map[block[y]][block[x]] = 2
-                case "S":
-                    self.map[block[y]][block[x]] = 3
-                case "Z":
-                    self.map[block[y]][block[x]] = 4
-                case "J":
-                    self.map[block[y]][block[x]] = 5
-                case "L":
-                    self.map[block[y]][block[x]] = 6
-                case "T":
-                    self.map[block[y]][block[x]] = 7
+        self.match_string(possition,string)
         return False
 
 
@@ -113,24 +97,7 @@ class Field:
             self.map[block[y]][block[x]] = 0
 
             block[x] += 1
-
-        for block in possition:
-            match (string):
-
-                case "I":
-                    self.map[block[y]][block[x]] = 1
-                case "O":
-                    self.map[block[y]][block[x]] = 2
-                case "S":
-                    self.map[block[y]][block[x]] = 3
-                case "Z":
-                    self.map[block[y]][block[x]] = 4
-                case "J":
-                    self.map[block[y]][block[x]] = 5
-                case "L":
-                    self.map[block[y]][block[x]] = 6
-                case "T":
-                    self.map[block[y]][block[x]] = 7
+            self.match_string(possition,string)
         return
 
 
@@ -144,23 +111,7 @@ class Field:
             self.map[block[y]][block[x]] = 0
 
             block[x] -= 1
-        for block in possition:
-            match (string):
-
-                case "I":
-                    self.map[block[y]][block[x]] = 1
-                case "O":
-                    self.map[block[y]][block[x]] = 2
-                case "S":
-                    self.map[block[y]][block[x]] = 3
-                case "Z":
-                    self.map[block[y]][block[x]] = 4
-                case "J":
-                    self.map[block[y]][block[x]] = 5
-                case "L":
-                    self.map[block[y]][block[x]] = 6
-                case "T":
-                    self.map[block[y]][block[x]] = 7
+            self.match_string(possition,string)
         return
 
     def update_level(self) -> None:
@@ -201,11 +152,12 @@ class Field:
             block[x] = block[x] - shaft[x]
             block[y] = block[y] - shaft[y]
         for block in possition["tetro"]:
-            if self.map[-1*block[y]][block[x]] >= 10:
+            print(self.map[block[x]+shaft[y]][-block[y]+shaft[x]])
+            if self.map[block[x]+shaft[y]][-block[y]+shaft[x]] >= 10:
                 for block in possition["tetro"]:
                     block[x] = block[x] + shaft[x]
                     block[y] = block[y] + shaft[y]
-                print(block)
+                self.match_string(possition["tetro"],string)
                 return
         for block in possition["tetro"]:
             block[x], block[y] = -block[y], block[x]
@@ -245,22 +197,7 @@ class Field:
             # possition["shaft"][x] -= 1
             # print("j")
 
-        for block in possition["tetro"]:
-            match (string):
-                case "I":
-                    self.map[block[y]][block[x]] = 1
-                case "O":
-                    self.map[block[y]][block[x]] = 2
-                case "S":
-                    self.map[block[y]][block[x]] = 3
-                case "Z":
-                    self.map[block[y]][block[x]] = 4
-                case "J":
-                    self.map[block[y]][block[x]] = 5
-                case "L":
-                    self.map[block[y]][block[x]] = 6
-                case "T":
-                    self.map[block[y]][block[x]] = 7
+        self.match_string(possition["tetro"],string)
         # print(possition["tetro"])
 
 
@@ -273,11 +210,12 @@ class Field:
             block[x] = block[x] - shaft[x]
             block[y] = block[y] - shaft[y]
         for block in possition["tetro"]:
-            if self.map[block[y]][-1*block[x]] >= 10:
+            print(self.map[-block[x]+shaft[y]][block[y]+shaft[x]])
+            if self.map[-block[x]+shaft[y]][block[y]+shaft[x]] >= 10:
                 for block in possition["tetro"]:
                     block[x] = block[x] + shaft[x]
                     block[y] = block[y] + shaft[y]
-                print(block)
+                self.match_string(possition["tetro"],string)
                 return
         for block in possition["tetro"]:
             block[x], block[y] = block[y], -block[x]
@@ -319,23 +257,7 @@ class Field:
             # print("e")
         print(possition["tetro"])
         # print(possition["shaft"])
-        for block in possition["tetro"]:
-            match (string):
-
-                case "I":
-                    self.map[block[y]][block[x]] = 1
-                case "O":
-                    self.map[block[y]][block[x]] = 2
-                case "S":
-                    self.map[block[y]][block[x]] = 3
-                case "Z":
-                    self.map[block[y]][block[x]] = 4
-                case "J":
-                    self.map[block[y]][block[x]] = 5
-                case "L":
-                    self.map[block[y]][block[x]] = 6
-                case "T":
-                    self.map[block[y]][block[x]] = 7
+        self.match_string(possition["tetro"],string)
         # print(possition["tetro"])
     # def I_spin(self, possition: Dict[str, List[List[int]]], string: Literal["L", "R"]) -> None:
         # 3→0→1→2
@@ -377,7 +299,24 @@ class Field:
     def is_game_over(self) -> bool:
         return any(self.map[1][x] >= 10 for x in range(1, self.cols - 1))
 
+    def match_string(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> List[List[int]]:
+        for block in possition:
+            match (string):
 
+                case "I":
+                    self.map[block[y]][block[x]] = 1
+                case "O":
+                    self.map[block[y]][block[x]] = 2
+                case "S":
+                    self.map[block[y]][block[x]] = 3
+                case "Z":
+                    self.map[block[y]][block[x]] = 4
+                case "J":
+                    self.map[block[y]][block[x]] = 5
+                case "L":
+                    self.map[block[y]][block[x]] = 6
+                case "T":
+                    self.map[block[y]][block[x]] = 7
 # (1,3)(2,3)(3,3)(4,3) 0
 # (2,1)(2,2)(2,3)(2,4) 1
 # (4,2)(3,2)(2,2)(1,2) 2
