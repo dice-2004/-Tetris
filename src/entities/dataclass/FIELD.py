@@ -57,7 +57,7 @@ class Field:
 
 
 
-    def down(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"],shaft:List[int]) -> bool:
+    def down(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> bool:
         print(possition)
         for block in possition:
             if self.map[block[y]+1][block[x]] >= 10:
@@ -65,10 +65,10 @@ class Field:
                     self.map[block[y]][block[x]] += 10
                 self.delete()
                 return True
-        shaft[1] += 1
         for block in possition:
             self.map[block[y]][block[x]] = 0
             block[y] += 1
+        # shaft[y] += 1
         for block in possition:
             match (string):
 
@@ -89,11 +89,11 @@ class Field:
         return False
 
 
-    def right(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"],shaft:List[int]) -> None:
+    def right(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         for block in possition:
             if self.map[block[1]][block[0] + 1] >= 10:
                 return
-        shaft[0] += 1
+        # shaft[x] += 1
         for block in possition:
             self.map[block[y]][block[x]] = 0
 
@@ -119,12 +119,12 @@ class Field:
         return
 
 
-    def left(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"],shaft:List[int]) -> None:
+    def left(self,possition:List[List[int]],string:Literal["I","O","S","Z","J","L","T"]) -> None:
         for block in possition:
             if self.map[block[1]][block[0] - 1] >= 10:
 
                 return
-        shaft[0] -= 1
+        # shaft[x] -= 1
         for block in possition:
             self.map[block[y]][block[x]] = 0
 
@@ -160,44 +160,53 @@ class Field:
     def L_spin(self, possition: Dict[str, List[List[int]]], string: Literal["I", "O", "S", "Z", "J", "L", "T"],) -> None:
         for block in possition["tetro"]:
             self.map[block[y]][block[x]] = 0
+        shaft=possition["tetro"][0].copy()
         for block in possition["tetro"]:
-            block[x] = block[x] - possition["shaft"][x]
-            block[y] = block[y] - possition["shaft"][y]
+            block[x] = block[x] - shaft[x]
+            block[y] = block[y] - shaft[y]
+        for block in possition["tetro"]:
+            if self.map[-1*block[y]][block[x]] >= 10:
+                for block in possition["tetro"]:
+                    block[x] = block[x] + shaft[x]
+                    block[y] = block[y] + shaft[y]
+                print(block)
+                return
         for block in possition["tetro"]:
             block[x], block[y] = -block[y], block[x]
         for block in possition["tetro"]:
-            block[x] = block[x] + possition["shaft"][x]
-            block[y] = block[y] + possition["shaft"][y]
+            block[x] = block[x] + shaft[x]
+            block[y] = block[y] + shaft[y]
         # if string == "I":
         #     possition["spin_C"] -= 1
         #     self.I_spin(possition, "L")
         while any(block[y] >= self.rows -1  for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[y] -= 1
-            possition["shaft"][y] -= 1
+            # possition["shaft"][y] -= 1
         while any(block[y] <= 0 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[y] += 1
+            # possition["shaft"][y] += 1
             # print("f")
         while any(block[x] <= 0 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] += 1
-            possition["shaft"][x] += 1
+            # possition["shaft"][x] += 1
             # print("g")
         while any(block[x] >= self.cols for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] -= 1
-            possition["shaft"][x] -= 1
+            # possition["shaft"][x] -= 1
             # print("h")
         while any(self.map[block[y]][block[x]] == 20 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] += 1
-            possition["shaft"][x] += 1
+            # possition["shaft"][x] += 1
             # print("i")
         while any(self.map[block[y]][block[x]] == 30 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] -= 1
-            possition["shaft"][x] -= 1
+            # possition["shaft"][x] -= 1
             # print("j")
 
         for block in possition["tetro"]:
@@ -220,50 +229,60 @@ class Field:
 
 
     def R_spin(self,possition: Dict[str, List[List[int]]],string: Literal["I", "O", "S", "Z", "J", "L", "T"],) -> None:
+
         for block in possition["tetro"]:
             self.map[block[y]][block[x]] = 0
+        shaft=possition["tetro"][0].copy()
         for block in possition["tetro"]:
-            block[x] = block[x] - possition["shaft"][x]
-            block[y] = block[y] - possition["shaft"][y]
+            block[x] = block[x] - shaft[x]
+            block[y] = block[y] - shaft[y]
+        for block in possition["tetro"]:
+            if self.map[block[y]][-1*block[x]] >= 10:
+                for block in possition["tetro"]:
+                    block[x] = block[x] + shaft[x]
+                    block[y] = block[y] + shaft[y]
+                print(block)
+                return
         for block in possition["tetro"]:
             block[x], block[y] = block[y], -block[x]
 
         for block in possition["tetro"]:
-            block[x] = block[x] + possition["shaft"][x]
-            block[y] = block[y] + possition["shaft"][y]
+            block[x] = block[x] + shaft[x]
+            block[y] = block[y] + shaft[y]
         # if string == "I":
         #     possition["spin_C"] += 1
         #     self.I_spin(possition, "R")
         while any(block[y] >= self.rows -1 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[y] -= 1
+            # possition["shaft"][y] -= 1
         while any(block[y] <= 0 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[y] += 1
             # print("a")
-            possition["shaft"][y] -= 1
+            # possition["shaft"][y] -= 1
         while any(block[x] <= 0 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] += 1
-            possition["shaft"][x] += 1
+            # possition["shaft"][x] += 1
             # print("b")
         while any(block[x] >= self.cols for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] -= 1
-            possition["shaft"][x] -= 1
+            # possition["shaft"][x] -= 1
             # print("c")
         while any(self.map[block[y]][block[x]] == 20 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] += 1
-            possition["shaft"][x] += 1
+            # possition["shaft"][x] += 1
             # print("d")
         while any(self.map[block[y]][block[x]] == 30 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[x] -= 1
-            possition["shaft"][x] -= 1
+            # possition["shaft"][x] -= 1
             # print("e")
         print(possition["tetro"])
-        print(possition["shaft"])
+        # print(possition["shaft"])
         for block in possition["tetro"]:
             match (string):
 
