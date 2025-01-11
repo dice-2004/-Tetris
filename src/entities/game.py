@@ -10,7 +10,7 @@ import copy
 
 class Game:
     # rows,cols=22,12 # <-20*10
-    def __init__(self, mode: int, time: int = 1000, rows: int = 23, cols: int = 12) -> None:
+    def __init__(self, mode: int, time: int = 2000, rows: int = 23, cols: int = 12) -> None:
         self.default_time = time
         self.time = time
         if mode == 0:
@@ -108,12 +108,17 @@ class Game:
         if self.game_over_flag:
             return
         elif self.is_falled == True:
-            self.tetromino = copy.deepcopy(self.mode.Tetromino[self.strings[0]])
             self.strings.pop(0)
             G_string = random.choice(list(self.mode.Tetromino.keys()))
+            count:int = 0
             while G_string == self.strings[-2]:
                 G_string = random.choice(list(self.mode.Tetromino.keys()))
+                count += 1
+                if count > 30:
+                    break
+
             self.strings.append(G_string)
+            self.tetromino = copy.deepcopy(self.mode.Tetromino[self.strings[0]])
             print(self.strings)
 
             self.is_falled = False
@@ -158,8 +163,12 @@ class Game:
         self.strings.append(random.choice(list(self.mode.Tetromino.keys())))
         for i in range(1,4):
             string = random.choice(list(self.mode.Tetromino.keys()))
+            count:int = 0
             while self.strings[i-1] == string:
                 string= random.choice(list(self.mode.Tetromino.keys()))
+                count+=1
+                if count > 30:
+                    break
             self.strings.append(string)
 
 

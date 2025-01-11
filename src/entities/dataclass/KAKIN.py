@@ -22,16 +22,7 @@ class Kakin:
                 ],
                 "spin_C":0,
 
-            },
-            "O": {
-                "shaft": [self.BASE["x"], self.BASE["y"]],
-                "tetro": [
-                    [self.BASE["x"], self.BASE["y"]],
-                    [self.BASE["x"] + 1, self.BASE["y"]],
-                    [self.BASE["x"], self.BASE["y"] + 1],
-                    [self.BASE["x"] + 1, self.BASE["y"] + 1],
-                ],
-            },
+            }
         }
 
 

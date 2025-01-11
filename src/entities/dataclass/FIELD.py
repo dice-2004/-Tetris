@@ -171,10 +171,13 @@ class Field:
         # if string == "I":
         #     possition["spin_C"] -= 1
         #     self.I_spin(possition, "L")
-        while any(block[y] >= self.rows for block in possition["tetro"]):
+        while any(block[y] >= self.rows -1  for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[y] -= 1
             possition["shaft"][y] -= 1
+        while any(block[y] <= 0 for block in possition["tetro"]):
+            for block in possition["tetro"]:
+                block[y] += 1
             # print("f")
         while any(block[x] <= 0 for block in possition["tetro"]):
             for block in possition["tetro"]:
@@ -231,9 +234,12 @@ class Field:
         # if string == "I":
         #     possition["spin_C"] += 1
         #     self.I_spin(possition, "R")
-        while any(block[y] >= self.rows for block in possition["tetro"]):
+        while any(block[y] >= self.rows -1 for block in possition["tetro"]):
             for block in possition["tetro"]:
                 block[y] -= 1
+        while any(block[y] <= 0 for block in possition["tetro"]):
+            for block in possition["tetro"]:
+                block[y] += 1
             # print("a")
             possition["shaft"][y] -= 1
         while any(block[x] <= 0 for block in possition["tetro"]):

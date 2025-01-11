@@ -14,7 +14,7 @@ from entities import game
 # 初期化処理
 value:int = env.init()
 ctypes.windll.shcore.SetProcessDpiAwareness(1)
-fall_interval:int = 500 # (ms)
+fall_interval:int = 2000 # (ms)
 
 # スタートメニュー
 while value == 2:
