@@ -3,7 +3,7 @@
 
 execute
 ```
-python src/app.py
+start.bat
 ```
 <br>
 
