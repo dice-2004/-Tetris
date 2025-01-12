@@ -42,7 +42,7 @@ while value == 2:
                 pass
         # entities/Tetromino/kakin.py
         # entities/game.py
-        GAME:game.Game=game.Game(value,fall_interval*1000,rows+2,cols+2)
+        GAME:game.Game=game.Game(value,fall_interval,rows+2,cols+2)
     elif value == 1:
         # entities/Tetromino/defalut.py
         # entities/game.py
