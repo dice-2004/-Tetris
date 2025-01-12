@@ -4,7 +4,11 @@ from typing import Union,Literal
 # import time
 Num=Union[int,float]
 
-IMAGE_FILEPATH:List[str] = [""]
+IMAGE_FILEPATH:List[str] = [
+    "English\src\assets\images\menu_start.png",
+    "English\src\assets\images\menu_setting.png",
+    "English\src\assets\images\menu_charge.png"
+]
 
 class Top_page:
     def __init__(self, window_title: str,width:int,height:int,x_position:int,y_position:int) -> None:
@@ -26,8 +30,9 @@ class Top_page:
         #    {"text": "Setting", "color": self.NOT_SECELT},
         #    {"text": "Exit", "color": self.NOT_SECELT},
         #]
+        self.num_menu:int = 3
         self.select_value:int = 1
-        self.labels:Any = []
+        #self.labels:Any = []
         # self.Canvases = []
         self.canvas:tk.Canvas = tk.Canvas(self.root, bg="white", highlightthickness=0)  # Canvasの作成
         self.canvas.pack(fill="both", expand=True)
@@ -36,24 +41,29 @@ class Top_page:
 
     # メニュー描写
     def draw_menu(self) -> None:
-        for i in range(len(self.menu)):
-            x, y = 500, 0  # 初期座標
-            if i == 0:
-                self.label:tk.Label = tk.Label(
-                    self.root
-                )
-                self.label.place(x=500 ,y=0)
-                self.labels.append(self.label)
-            else:
-                # 2つ目以降のラベルの位置とサイズ
-                x:int = -50 + 100 * i
-                y:int = 130 + 80 * i
-                width:int = 250
-                height:int = 60
-                font_size:int = 20
-                radius:int = 25
-                            # 角丸の長方形を描画
-                self.create_rounded_rectangle(x, y, x+width, y+height, radius=radius, fill=self.menu[i]["color"])
+        label:tk.Label = tk.Label (root, image = IMAGE_FILEPATH[self.get_select_value()])
+        label.pack()
+
+    #def draw_menu(self) -> None:
+    #    for i in range(self.num_menu):
+    #        x, y = 0, 0  # 初期座標
+    #        if i == 0:
+    #            self.label:tk.Label = tk.Label(
+    #                self.root,
+    #                image = IMAGE_FILEPATH[i]
+    #            )
+    #            self.label.place(x=0 ,y=0)
+    #            self.labels.append(self.label)
+    #        else:
+    #            # 2つ目以降のラベルの位置とサイズ
+    #            x:int = -50 + 100 * i
+    #            y:int = 130 + 80 * i
+    #            width:int = 250
+    #            height:int = 60
+    #            font_size:int = 20
+    #            radius:int = 25
+    #                        # 角丸の長方形を描画
+    #            self.create_rounded_rectangle(x, y, x+width, y+height, radius=radius, fill=self.menu[i]["color"])
 
     #            # テキストを配置
     #            text_x :Num= x + width // 2
@@ -135,34 +145,33 @@ class Top_page:
         #     canvas.pack_forget()
         self.root.configure(bg="white")  # 背景を白に設定
 
-    # 色変更
-    def change_color(self) -> None:
-        for i in range(len(self.menu)):
-            if i == self.select_value:
-                self.menu[i]["color"] = self.SECELT
-            else:
-                self.menu[i]["color"] = self.NOT_SECELT
+    ## 色変更
+    #def change_color(self) -> None:
+    #    for i in range(len(self.menu)):
+    #        if i == self.select_value:
+    #            self.menu[i]["color"] = self.SECELT
+    #        else:
+    #            self.menu[i]["color"] = self.NOT_SECELT
 
     # 選択値取得
     def get_select_value(self) -> int:
         return self.select_value
 
-    def create_rounded_rectangle(self, x1, y1, x2, y2, radius=25, **kwargs):
-        """角丸の長方形を描画する関数"""
-        points:Num= [
-            x1+radius, y1, x1+radius, y1,
-            x2-radius, y1, x2-radius, y1,
-            x2, y1, x2, y1+radius,
-            x2, y2-radius, x2, y2-radius,
-            x2, y2, x2-radius, y2,
-            x1+radius, y2, x1+radius, y2,
-            x1, y2, x1, y2-radius,
-            x1, y1+radius, x1, y1+radius,
-            x1, y1
-        ]
-
-        return self.canvas.create_polygon(points, **kwargs, smooth=True)
-
+    #def create_rounded_rectangle(self, x1, y1, x2, y2, radius=25, **kwargs):
+    #    """角丸の長方形を描画する関数"""
+    #    points:Num= [
+    #        x1+radius, y1, x1+radius, y1,
+    #        x2-radius, y1, x2-radius, y1,
+    #        x2, y1, x2, y1+radius,
+    #        x2, y2-radius, x2, y2-radius,
+    #        x2, y2, x2-radius, y2,
+    #        x1+radius, y2, x1+radius, y2,
+    #        x1, y2, x1, y2-radius,
+    #        x1, y1+radius, x1, y1+radius,
+    #        x1, y1
+    #    ]
+    #
+    #    return self.canvas.create_polygon(points, **kwargs, smooth=True)
 
 if __name__ == "__main__":
     from ..utils import setting_enviroments as env
