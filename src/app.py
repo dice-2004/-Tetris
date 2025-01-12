@@ -9,12 +9,14 @@ from time import sleep
 
 from utils import setting_enviroments as env
 from entities.top import Top_page
-from entities import game
+from entities import game,setting
 
 # 初期化処理
 value:int = env.init()
 ctypes.windll.shcore.SetProcessDpiAwareness(1)
-fall_interval:int = 2000 # (ms)
+fall_interval:float = 1.0 # (ms)
+rows:int = 21
+cols:int = 10
 
 # スタートメニュー
 while value == 2:
@@ -38,31 +40,31 @@ while value == 2:
                 break
             else:
                 pass
-        GAME:game.Game=game.Game(value,fall_interval)
         # entities/Tetromino/kakin.py
         # entities/game.py
+        GAME:game.Game=game.Game(value,fall_interval*1000,rows+2,cols+2)
     elif value == 1:
-        GAME:game.Game=game.Game(value,fall_interval)
         # entities/Tetromino/defalut.py
         # entities/game.py
-
-        GAME.fall()
-        pass
+        GAME:game.Game=game.Game(value,fall_interval,rows+2,cols+2)
     elif value == 2:
         # entities/setting.py
-        print("Setting")
-        pass
+        # print(fall_interval,rows,cols)
+        SETTING= setting.Setting(fall_interval,rows,cols)
+        fall_interval = float(SETTING.fall_interval)
+        rows = int(SETTING.rows)
+        cols = int(SETTING.cols)
     elif value == 3:
         # 終了
         exit()
 
 
 # Tkinterを使用してウィンドウを作成
-root:tk.Tk = tk.Tk()
-root.title("Hello, Tkinter!")
-root.focus_force()
-label:tk.Label = tk.Label(root, text="Hello, World!")
-label.pack()
-root.mainloop()
+# root:tk.Tk = tk.Tk()
+# root.title("Hello, Tkinter!")
+# root.focus_force()
+# label:tk.Label = tk.Label(root, text="Hello, World!")
+# label.pack()
+# root.mainloop()
 
 # ゲーム画面

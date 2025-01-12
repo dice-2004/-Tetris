@@ -10,9 +10,9 @@ from time import sleep
 
 class Game:
     # rows,cols=22,12 # <-20*10
-    def __init__(self, mode: int, time: int = 2000, rows: int = 23, cols: int = 12) -> None:
-        self.default_time = time
-        self.time = time
+    def __init__(self, mode: int, time: int = 1, rows: int = 23, cols: int = 12) -> None:
+        self.default_time = int(time*1000)
+        self.time = int(time*1000)
         if mode == 0:
             self.mode = KAKIN.Kakin({"x": int(cols / 2), "y": 0})
         elif mode == 1:
@@ -75,10 +75,10 @@ class Game:
         try:
             self.score_label.config(text=f"Score: {self.MAP.score}")
             self.level_label.config(text=f"Level: {self.MAP.level}")
-            
+
             # 落下速度をレベルに応じて調整（最小100ms）
             # self.default_time = max(100, 1000 - (self.MAP.level - 1) * 50)
-            
+
             if not self.game_over_flag:
                 self.root.after(100, self.update_score_display)
         except Exception as e:
