@@ -31,6 +31,17 @@ while value == 2:
 # ￥10,000,000,000
 #              ￥0
     if value == 0:
+        GAME:game.Game=game.Game(value,fall_interval)
+        # entities/Tetromino/defalut.py
+        # entities/game.py
+
+        GAME.fall()
+        pass
+    elif value == 1:
+        # entities/setting.py
+        print("Setting")
+        pass
+    elif value == 2:
         while True:
             if messagebox.askyesno("警告", "￥0\n残高がありません\n追加しますか？"):
                 messagebox.showinfo("警告", "￥10,000,000,000\n追加しました")
@@ -41,17 +52,6 @@ while value == 2:
         GAME:game.Game=game.Game(value,fall_interval)
         # entities/Tetromino/kakin.py
         # entities/game.py
-    elif value == 1:
-        GAME:game.Game=game.Game(value,fall_interval)
-        # entities/Tetromino/defalut.py
-        # entities/game.py
-
-        GAME.fall()
-        pass
-    elif value == 2:
-        # entities/setting.py
-        print("Setting")
-        pass
     elif value == 3:
         # 終了
         exit()

@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import PhotoImage
 from .dataclass import HIKAKIN, KAKIN, FIELD
 import random
 from time import time
@@ -6,6 +7,8 @@ from pprint import pprint
 from typing import Callable,List
 import copy
 from time import sleep
+from typing import Dict, Optional
+import os
 
 
 class Game:
@@ -19,6 +22,24 @@ class Game:
             self.mode = HIKAKIN.hikakin({"x": int(cols / 2), "y": 0})
         self.MAP: FIELD.Field = FIELD.Field(rows, cols)
         pprint(self.MAP.map)
+
+        # 画像パスの設定
+        self.IMAGE_FILEPATH = [
+            os.path.abspath("src/assets/images/Wall_and_Bottom(kari).png"),
+            os.path.abspath("src/assets/images/empty_block.png"),
+            os.path.abspath("src/assets/images/blue_block.png"),
+            os.path.abspath("src/assets/images/green_block.png"),
+            os.path.abspath("src/assets/images/orange_block.png"),
+            os.path.abspath("src/assets/images/pink_block.png"),
+            os.path.abspath("src/assets/images/purple_block.png"),
+            os.path.abspath("src/assets/images/red_block.png"),
+            os.path.abspath("src/assets/images/yellow_block.png"),
+            os.path.abspath("src/assets/images/navi_block.png")
+        ]
+
+        # 画像の読み込みと保存
+        self.images: Dict[int, PhotoImage] = {}
+        self.load_images()
 
         with open("src/entities/dataclass/map.txt", "w") as f:
             for row in self.MAP.map:
@@ -52,6 +73,15 @@ class Game:
         self.game_over_observer()
         self.root.mainloop()
         # データクラスの書き換え
+
+    def load_images(self) -> None:
+        """ブロック画像の読み込み"""
+        for i, path in enumerate(self.IMAGE_FILEPATH):
+            try:
+                self.images[i] = PhotoImage(file=path)
+            except Exception as e:
+                print(f"Error loading image {path}: {e}")
+                self.images[i] = None
 
     def bind_keys(self):
         self.root.bind("<Down>", self.down)
@@ -95,7 +125,19 @@ class Game:
                 for row in self.MAP.map:
                     f.write(" ".join(f"{cell:2}" for cell in row) + "\n")
 
+                
+
         return wapper
+
+    def draw_menu(self) -> None:
+        for i in range(self.num_menu):
+            x, y = 0, 0  # 初期座標
+            self.label:tk.Label = tk.Label(
+                self.root,
+                image = self.images[i]
+            )
+            self.label.place(x=0 ,y=0)
+            self.labels.append(self.label)
 
     @update
     def down(self, event) -> None:
