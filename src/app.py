@@ -17,7 +17,7 @@ ctypes.windll.shcore.SetProcessDpiAwareness(1)
 fall_interval:int = 2000 # (ms)
 
 # スタートメニュー
-while value == 2:
+while value == 1:
     top:Top_page = Top_page("Start Menu",600,500,0,0)
     # value -> 0:課金, 1:Gama Start, 2:Setting, 3:Exit
     value:int=top.get_select_value()
