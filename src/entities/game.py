@@ -13,10 +13,10 @@ import os
 
 class Game:
     # rows,cols=22,12 # <-20*10
-    def __init__(self, mode: int, time: int = 2000, rows: int = 23, cols: int = 12) -> None:
+    def __init__(self, mode: int, time: int = 2, rows: int = 23, cols: int = 12) -> None:
 
-        self.default_time = time
-        self.time = time
+        self.default_time = int(time)*1000
+        self.time = int(time)*1000
         if mode == 2:
             self.mode = KAKIN.Kakin({"x": int(cols / 2), "y": 0})
         elif mode == 0:
