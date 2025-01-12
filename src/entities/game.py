@@ -109,10 +109,10 @@ class Game:
         try:
             self.score_label.config(text=f"Score: {self.MAP.score}")
             self.level_label.config(text=f"Level: {self.MAP.level}")
-            
+
             # 落下速度をレベルに応じて調整（最小100ms）
             # self.default_time = max(100, 1000 - (self.MAP.level - 1) * 50)
-            
+
             if not self.game_over_flag:
                 self.root.after(100, self.update_score_display)
         except Exception as e:
