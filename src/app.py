@@ -19,7 +19,7 @@ rows:int = 21
 cols:int = 10
 
 # スタートメニュー
-while value == 2:
+while value == 1:
     top:Top_page = Top_page("Start Menu",600,500,0,0)
     # value -> 0:課金, 1:Gama Start, 2:Setting, 3:Exit
     value:int=top.get_select_value()
@@ -33,6 +33,19 @@ while value == 2:
 # ￥10,000,000,000
 #              ￥0
     if value == 0:
+        GAME:game.Game=game.Game(value,fall_interval,rows+2,cols+2)
+        # entities/Tetromino/defalut.py
+        # entities/game.py
+        pass
+    elif value == 1:
+        # entities/setting.py
+        # print(fall_interval,rows,cols)
+        SETTING= setting.Setting(fall_interval,rows,cols)
+        fall_interval = float(SETTING.fall_interval)
+        rows = int(SETTING.rows)
+        cols = int(SETTING.cols)
+        pass
+    elif value == 2:
         while True:
             if messagebox.askyesno("警告", "￥0\n残高がありません\n追加しますか？"):
                 messagebox.showinfo("警告", "￥10,000,000,000\n追加しました")
@@ -40,20 +53,9 @@ while value == 2:
                 break
             else:
                 pass
+        GAME:game.Game=game.Game(value,fall_interval,rows+2,cols+2)
         # entities/Tetromino/kakin.py
         # entities/game.py
-        GAME:game.Game=game.Game(value,fall_interval,rows+2,cols+2)
-    elif value == 1:
-        # entities/Tetromino/defalut.py
-        # entities/game.py
-        GAME:game.Game=game.Game(value,fall_interval,rows+2,cols+2)
-    elif value == 2:
-        # entities/setting.py
-        # print(fall_interval,rows,cols)
-        SETTING= setting.Setting(fall_interval,rows,cols)
-        fall_interval = float(SETTING.fall_interval)
-        rows = int(SETTING.rows)
-        cols = int(SETTING.cols)
     elif value == 3:
         # 終了
         exit()

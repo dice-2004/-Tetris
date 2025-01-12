@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import PhotoImage
 from .dataclass import HIKAKIN, KAKIN, FIELD
 import random
 from time import time
@@ -6,19 +7,38 @@ from pprint import pprint
 from typing import Callable,List
 import copy
 from time import sleep
+from typing import Dict, Optional
+import os
 
 
 class Game:
     # rows,cols=22,12 # <-20*10
-    def __init__(self, mode: int, time: int = 1, rows: int = 23, cols: int = 12) -> None:
-        self.default_time = int(time*1000)
-        self.time = int(time*1000)
-        if mode == 0:
+    def __init__(self, mode: int, time: int = 2000, rows: int = 23, cols: int = 12) -> None:
+
+        self.default_time = time
+        self.time = time
+        if mode == 2:
             self.mode = KAKIN.Kakin({"x": int(cols / 2), "y": 0})
-        elif mode == 1:
+        elif mode == 0:
             self.mode = HIKAKIN.hikakin({"x": int(cols / 2), "y": 0})
         self.MAP: FIELD.Field = FIELD.Field(rows, cols)
         pprint(self.MAP.map)
+
+        print(type(self.MAP.map[1][1]))
+
+        # 画像パスの設定
+        self.IMAGE_FILEPATH = [
+            os.path.abspath("src/assets/images/Wall_and_Bottom(kari).png"),
+            os.path.abspath("src/assets/images/empty_block.png"),
+            os.path.abspath("src/assets/images/blue_block.png"),
+            os.path.abspath("src/assets/images/green_block.png"),
+            os.path.abspath("src/assets/images/orange_block.png"),
+            os.path.abspath("src/assets/images/pink_block.png"),
+            os.path.abspath("src/assets/images/purple_block.png"),
+            os.path.abspath("src/assets/images/red_block.png"),
+            os.path.abspath("src/assets/images/yellow_block.png"),
+            os.path.abspath("src/assets/images/navi_block.png")
+        ]
 
         with open("src/entities/dataclass/map.txt", "w") as f:
             for row in self.MAP.map:
@@ -36,15 +56,20 @@ class Game:
         self.tetromino = copy.deepcopy(self.mode.Tetromino[self.strings[0]])
         self.root: tk.Tk = tk.Tk()
         self.root.title("Tetris")
-        self.root.geometry("500x500")
+        self.root.geometry("500x600")
+        self.labels: List[tk.Label] = []
         # self.root.protocol("WM_DELETE_WINDOW", self.exit)
         self.root.focus_force()
         self.bind_keys()
 
+        # 画像の読み込みと保存
+        self.images: Dict[int, PhotoImage] = {}
+        self.load_images()
+
         self.score_label = tk.Label(self.root, text="Score: 0", font=('Arial', 14))
-        self.score_label.pack(pady=5)
+        self.score_label.place(x=cols * 25, y=100)
         self.level_label = tk.Label(self.root, text="Level: 1", font=('Arial', 14))
-        self.level_label.pack(pady=5)
+        self.level_label.place(x=cols * 25, y=200)
 
         self.update_score_display()
 
@@ -52,6 +77,15 @@ class Game:
         self.game_over_observer()
         self.root.mainloop()
         # データクラスの書き換え
+
+    def load_images(self) -> None:
+        """ブロック画像の読み込み"""
+        for i, path in enumerate(self.IMAGE_FILEPATH):
+            try:
+                self.images[i] = PhotoImage(file=path)
+            except Exception as e:
+                print(f"Error loading image {path}: {e}")
+                self.images[i] = None
 
     def bind_keys(self):
         self.root.bind("<Down>", self.down)
@@ -94,8 +128,59 @@ class Game:
             with open("src/entities/dataclass/map.txt", "w") as f:
                 for row in self.MAP.map:
                     f.write(" ".join(f"{cell:2}" for cell in row) + "\n")
+            self.draw_block()
 
         return wapper
+
+    def draw_block(self) -> None:
+        """マップデータに基づいてブロックを描画"""
+        for label in self.labels:
+            label.destroy()  # 古いラベルを削除
+        self.labels.clear()
+
+        for y, row in enumerate(self.MAP.map):
+            for x, cell in enumerate(row):
+                image = self.match_block(cell)
+                # print(cell, end=" ")
+                if image is not None:
+                    label = tk.Label(self.root, image=image)
+                    label.place(x=x * 25, y=y * 25)  # 適切な位置に配置
+                    self.labels.append(label)
+
+#  0=Enpty 1=active_I   2=active_O   3=active_S   4=active_Z   5=active_J   6=active_L   7=active_T
+# 10=wall 11=stacked_I 12=stacked_O 13=stacked_S 14=stacked_Z 15=stacked_J 16=stacked_L 17=stacked_T
+    def match_block(self, cell:int) -> PhotoImage:
+        # print(type(cell))
+        match cell:
+            case 10 | 20 | 30:
+                return self.images[0]
+            case 0:
+                # print("empty")
+                return self.images[1]
+            case 1 | 11:
+                # print("blue")
+                return self.images[2]
+            case 2 | 12:
+                # print("yellow")
+                return self.images[8]
+            case 3 | 13:
+                # print("a")
+                return self.images[3]
+            case 4 | 14:
+                # print("b")
+                return self.images[7]
+            case 5 | 15:
+                # print("c")
+                return self.images[6]
+            case 6 | 16:
+                # print("d")
+                return self.images[4]
+            case 7 | 17:
+                # print("e")
+                return self.images[5]
+            case _:
+                # print("mattai")
+                return None
 
     @update
     def down(self, event) -> None:
@@ -151,6 +236,7 @@ class Game:
         self.unbind_keys()
         self.is_falled = self.MAP.down(self.tetromino["tetro"], self.strings[0])
         self.bind_keys()
+
         self.fall_id =self.root.after(self.time, self.fall)
         if self.is_falled:
             sleep(0.1)
