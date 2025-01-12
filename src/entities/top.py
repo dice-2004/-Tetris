@@ -4,6 +4,8 @@ from typing import Union,Literal
 # import time
 Num=Union[int,float]
 
+IMAGE_FILEPATH:List[str] = [""]
+
 class Top_page:
     def __init__(self, window_title: str,width:int,height:int,x_position:int,y_position:int) -> None:
         self.root:tk.Tk = tk.Tk()
@@ -16,14 +18,14 @@ class Top_page:
         self.root.bind("<Down>", self.down)  # 下矢印キー
         self.root.bind("<Return>", self.enter)  # Enterキー
 
-        self.SECELT:str = "#FF0000"  # red
-        self.NOT_SECELT:str = "#0000FF"  # blue
-        self.menu:List[Dict[str,Literal["#FF0000", "#0000FF"]]] = [
-            {"text": "課金", "color": self.NOT_SECELT},
-            {"text": "Start Game", "color": self.SECELT},
-            {"text": "Setting", "color": self.NOT_SECELT},
-            {"text": "Exit", "color": self.NOT_SECELT},
-        ]
+        #self.SECELT:str = "#FF0000"  # red
+        #self.NOT_SECELT:str = "#0000FF"  # blue
+        #self.menu:List[Dict[str,Literal["#FF0000", "#0000FF"]]] = [
+        #    {"text": "課金", "color": self.NOT_SECELT},
+        #    {"text": "Start Game", "color": self.SECELT},
+        #    {"text": "Setting", "color": self.NOT_SECELT},
+        #    {"text": "Exit", "color": self.NOT_SECELT},
+        #]
         self.select_value:int = 1
         self.labels:Any = []
         # self.Canvases = []
@@ -38,13 +40,7 @@ class Top_page:
             x, y = 500, 0  # 初期座標
             if i == 0:
                 self.label:tk.Label = tk.Label(
-                    self.root,
-                    text=self.menu[i]["text"],
-                    bg=self.menu[i]["color"],
-                    font=("Helvetica", 10),
-                    bd=8,
-                    width=6,
-                    height=1,
+                    self.root
                 )
                 self.label.place(x=500 ,y=0)
                 self.labels.append(self.label)
@@ -59,17 +55,17 @@ class Top_page:
                             # 角丸の長方形を描画
                 self.create_rounded_rectangle(x, y, x+width, y+height, radius=radius, fill=self.menu[i]["color"])
 
-                # テキストを配置
-                text_x :Num= x + width // 2
-                text_y :Num= y + height // 2
-                self.canvas.create_text(
-                    text_x,
-                    text_y,
-                    text=self.menu[i]["text"],
-                    font=("Helvetica", font_size),
-                    fill="black"
-                )
-                # self.Canvases.append(self.canvas)
+    #            # テキストを配置
+    #            text_x :Num= x + width // 2
+    #            text_y :Num= y + height // 2
+    #            self.canvas.create_text(
+    #                text_x,
+    #                text_y,
+    #                text=self.menu[i]["text"],
+    #                font=("Helvetica", font_size),
+    #                fill="black"
+    #            )
+    #            # self.Canvases.append(self.canvas)
 
 
     # def draw_menu(self) -> None:
