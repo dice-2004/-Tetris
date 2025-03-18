@@ -1,3 +1,5 @@
-# English
-### 情報英語で使用するリポジトリ
-
+# Tetris
+## 概要
+## 仕様技術
+- python
+  - Tkinter
